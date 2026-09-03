@@ -1,0 +1,2731 @@
+    /* ========================================
+       ROOT — DESIGN TOKENS
+    ======================================== */
+    :root {
+      --bg-deepest: #040002;
+      --bg-dark: #0d0007;
+      --bg-mid: #1a000d;
+      --bg-card: rgba(30, 0, 14, 0.82);
+
+      --rose: #e8185e;
+      --rose-light: #ff4d8b;
+      --rose-pale: #ffc0d4;
+      --rose-glow: rgba(232, 24, 94, 0.55);
+      --rose-glow-soft: rgba(232, 24, 94, 0.18);
+
+      --crimson: #7a0028;
+      --crimson-deep: #3d0014;
+
+      --gold: #c9a227;
+      --gold-light: #e0bf6a;
+      --gold-pale: rgba(201, 162, 39, 0.25);
+
+      --card-border: rgba(201, 162, 39, 0.45);
+      --card-border-inner: rgba(255, 180, 210, 0.12);
+
+      --text-primary: #fff2f5;
+      --text-secondary: rgba(255, 235, 242, 0.75);
+      --text-dim: rgba(255, 210, 228, 0.48);
+      --text-poem: rgba(255, 230, 240, 0.85);
+
+      --shadow-heart: 0 8px 32px rgba(232, 24, 94, 0.6);
+      --shadow-card: 0 40px 100px rgba(0, 0, 0, 0.85), 0 0 80px rgba(232, 24, 94, 0.12);
+      --shadow-btn: 0 6px 28px rgba(232, 24, 94, 0.5);
+
+      --radius-card: 20px;
+      --radius-pill: 999px;
+    }
+
+    /* ========================================
+       RESET & BASE
+    ======================================== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background:
+        radial-gradient(ellipse at top right, rgba(232, 24, 94, 0.15), transparent 60%),
+        radial-gradient(circle at bottom left, rgba(201, 162, 39, 0.12), transparent 50%),
+        linear-gradient(to bottom, rgba(30, 0, 15, 0.65), rgba(10, 0, 5, 0.85)),
+        url('./bday2.png') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    /* Ambient pulsing overlay over the entire background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 100, 150, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+      animation: ambientPulse 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientPulse {
+      0% { opacity: 0.3; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.1); }
+    }
+
+
+
+    /* ========================================
+       FLOATING ELEMENTS LAYERS
+    ======================================== */
+    #hearts-layer,
+    #balloons-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* ---- Floating Hearts ---- */
+    .f-heart {
+      position: absolute;
+      bottom: -120px;
+      pointer-events: none;
+      animation: heartRise linear forwards;
+      will-change: transform, opacity;
+    }
+
+    @keyframes heartRise {
+      0% {
+        transform: translateY(0) rotate(-4deg) scale(0.7);
+        opacity: 0;
+      }
+
+      8% {
+        opacity: 1;
+      }
+
+      45% {
+        transform: translateY(-50vh) rotate(6deg) scale(1);
+      }
+
+      100% {
+        transform: translateY(-115vh) rotate(-3deg) scale(0.85);
+        opacity: 0;
+      }
+    }
+
+    /* ---- Floating Balloons ---- */
+    .f-balloon {
+      position: absolute;
+      bottom: -220px;
+      pointer-events: none;
+      animation: balloonRise linear forwards;
+      will-change: transform, opacity;
+    }
+
+    @keyframes balloonRise {
+      0% {
+        transform: translateY(0) rotate(-3deg);
+        opacity: 0;
+      }
+
+      7% {
+        opacity: 1;
+      }
+
+      50% {
+        transform: translateY(-52vh) rotate(4deg);
+      }
+
+      100% {
+        transform: translateY(-118vh) rotate(-2deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes balSwing {
+
+      0%,
+      100% {
+        transform: rotate(-3deg);
+      }
+
+      50% {
+        transform: rotate(3deg);
+      }
+    }
+
+    /* /* ========================================
+   LANDING SCREEN (Modern Luxury Redesign)
+======================================== */
+
+    :root {
+      --gold-gradient: linear-gradient(90deg, #ffffff 0%, #ffeaa7 30%, #e0bf6a 70%, #ffffff 100%);
+      --berry-gradient: linear-gradient(135deg, #e11d48 0%, #9f1239 50%, #e11d48 100%);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    #landing {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      text-align: center;
+
+      /* Modern deep canvas with subtle ambient warmth */
+      background: radial-gradient(circle at center, rgba(224, 191, 106, 0.08) 0%, rgba(10, 10, 10, 0) 70%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      will-change: opacity, transform;
+      transition: opacity 0.8s var(--ease-out-expo),
+        transform 0.8s var(--ease-out-expo);
+    }
+
+    #landing.fading-out {
+      opacity: 0;
+      transform: scale(1.02);
+      /* Modern scale-out feels lighter than dropping down */
+      pointer-events: none;
+    }
+
+    #landing.gone {
+      display: none;
+    }
+
+    /* "Happy" Tagline */
+    .l-pre {
+      display: block;
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.5rem, 6vw, 3.8rem);
+      font-weight: 500;
+      color: #fff8d4;
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.03em;
+
+      animation: premiumReveal 1.2s var(--ease-out-expo) both;
+      animation-delay: 0.1s;
+    }
+
+    /* Master Title Container */
+    .l-title-container {
+      margin: 0.25rem 0;
+    }
+
+    /* "Birthday" — Elegantly unified with structural text color */
+    .l-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(5rem, 15vw, 11rem);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+
+      animation: premiumReveal 1.4s var(--ease-out-expo) both;
+      animation-delay: 0.25s;
+    }
+
+    /* Shared premium horizontal gold gradient */
+    .l-title span,
+    .l-post {
+      background: var(--gold-gradient);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: goldShimmer 8s linear infinite;
+    }
+
+    /* "My Queen" */
+    .l-post {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(2.4rem, 7vw, 4.5rem);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-top: 0.75rem;
+
+      animation: premiumReveal 1.4s var(--ease-out-expo) both, goldShimmer 8s linear infinite;
+      animation-delay: 0.4s;
+    }
+
+    @keyframes goldShimmer {
+      0% {
+        background-position: 0% center;
+      }
+
+      100% {
+        background-position: -200% center;
+      }
+    }
+
+    /* Minimalist Ornamental Divider */
+    .l-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      width: 100%;
+      max-width: 320px;
+      /* Snugger line spacing looks cleaner */
+      margin: 3rem 0;
+
+      animation: premiumReveal 1.4s var(--ease-out-expo) both;
+      animation-delay: 0.55s;
+    }
+
+    .l-ornament-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(224, 191, 106, 0.4), transparent);
+    }
+
+    .l-ornament-heart {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: #e0bf6a;
+      animation: heartPulse 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes heartPulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.85;
+      }
+
+      50% {
+        transform: scale(1.15);
+        opacity: 1;
+        filter: drop-shadow(0 0 8px rgba(224, 191, 106, 0.6));
+      }
+    }
+
+    /* Sub-tagline message */
+    .l-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+      color: rgba(255, 245, 248, 0.8);
+      letter-spacing: 0.05em;
+      margin-bottom: 4rem;
+      max-width: 540px;
+      line-height: 1.7;
+
+      animation: premiumReveal 1.4s var(--ease-out-expo) both;
+      animation-delay: 0.7s;
+    }
+
+    /* Modern High-End Interactive Button */
+    #open-btn {
+      position: relative;
+      padding: 1.25rem 4.5rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: var(--berry-gradient);
+      background-size: 200% auto;
+      border: 1px solid rgba(224, 191, 106, 0.3);
+      border-radius: 100px;
+      cursor: pointer;
+      outline: none;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(159, 18, 57, 0.25);
+
+      /* Smooth properties transition instead of 'all' */
+      transition: transform 0.3s var(--ease-out-expo),
+        box-shadow 0.3s var(--ease-out-expo),
+        background-position 0.5s ease,
+        border-color 0.3s ease;
+
+      animation: premiumReveal 1.4s var(--ease-out-expo) both;
+      animation-delay: 0.85s;
+    }
+
+    /* Clean, crisp modern shimmer reflection */
+    #open-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      transform: skewX(-25deg);
+    }
+
+    #open-btn:hover::before {
+      left: 150%;
+      transition: left 0.75s cubic-bezier(0.3, 1, 0.2, 1);
+    }
+
+    #open-btn:hover {
+      transform: translateY(-3px);
+      background-position: right center;
+      border-color: rgba(224, 191, 106, 0.6);
+      box-shadow: 0 15px 40px rgba(159, 18, 57, 0.45);
+    }
+
+    #open-btn:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+
+    /* Performance-Optimized Spatial Entrance Animation */
+    @keyframes premiumReveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ========================================
+   CARD WRAPPER (Enhanced)
+======================================== */
+    #card-wrapper {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem 6rem;
+
+      /* Smooth, modern hardware-accelerated transitions */
+      opacity: 0;
+      transform: translateY(24px) scale(0.98);
+      /* Slightly tighter initial offset */
+      pointer-events: none;
+      will-change: transform, opacity;
+
+      /* Custom cubic-bezier for a snappy, organic "spring" feel */
+      transition:
+        opacity 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000),
+        transform 0.7s cubic-bezier(0.175, 0.885, 0.320, 1.100);
+    }
+
+    #card-wrapper.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: all;
+      animation: cardFloat 8s ease-in-out infinite alternate;
+      animation-delay: 0.6s; /* Wait for entrance transition to finish */
+    }
+
+    @keyframes cardFloat {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-12px) scale(1); }
+    }
+
+    /* Optional: Subtle ambient backdrop to make the card stand out */
+    #card-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ========================================
+   GREETING CARD (ROYAL EDITION - DYNAMIC)
+======================================= */
+    .greeting-card {
+      width: 100%;
+      max-width: 740px;
+
+      /* Deep layered jewel-tone background with slow shimmer */
+      background:
+        radial-gradient(ellipse at 20% 0%, rgba(232, 24, 94, 0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(201, 162, 39, 0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(120, 0, 50, 0.15) 0%, transparent 70%),
+        linear-gradient(170deg,
+          rgba(35, 3, 18, 0.98) 0%,
+          rgba(12, 0, 6, 1) 45%,
+          rgba(28, 0, 12, 0.98) 100%);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+
+      /* Animated gradient border — gold → rose → gold sweep */
+      border: 2px solid transparent;
+      border-radius: 32px;
+      background-clip: padding-box, border-box;
+      background-origin: padding-box, border-box;
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(232, 24, 94, 0.22) 0%, transparent 55%),
+        linear-gradient(170deg, rgba(35, 3, 18, 0.98), rgba(12, 0, 6, 1), rgba(28, 0, 12, 0.98)),
+        linear-gradient(120deg,
+          rgba(255, 248, 212, 0.0) 0%,
+          rgba(255, 248, 212, 0.75) 20%,
+          rgba(201, 162, 39, 0.6) 35%,
+          rgba(232, 24, 94, 0.8) 50%,
+          rgba(201, 162, 39, 0.6) 65%,
+          rgba(255, 248, 212, 0.75) 80%,
+          rgba(255, 248, 212, 0.0) 100%);
+      background-size: auto, auto, 300% 300%;
+      animation: cardBorderSweep 6s linear infinite;
+
+      /* Rich layered drop shadow + ambient glows */
+      box-shadow:
+        0 50px 120px rgba(0, 0, 0, 0.96),
+        0 0 100px rgba(232, 24, 94, 0.3),
+        0 0 60px rgba(201, 162, 39, 0.2),
+        0 0 30px rgba(232, 24, 94, 0.15),
+        inset 0 1px 0 rgba(255, 248, 212, 0.12),
+        inset 0 -1px 0 rgba(232, 24, 94, 0.08);
+
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+
+      transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, box-shadow;
+    }
+
+    @keyframes cardBorderSweep {
+      0%   { background-position: auto, auto, 0% 50%; }
+      50%  { background-position: auto, auto, 100% 50%; }
+      100% { background-position: auto, auto, 0% 50%; }
+    }
+
+    /* Dramatic lift + intensified glow on hover */
+    .greeting-card:hover {
+      transform: translateY(-8px) scale(1.005);
+      box-shadow:
+        0 70px 140px rgba(0, 0, 0, 0.99),
+        0 0 140px rgba(232, 24, 94, 0.4),
+        0 0 100px rgba(201, 162, 39, 0.3),
+        0 0 50px rgba(232, 24, 94, 0.2),
+        inset 0 1px 0 rgba(255, 248, 212, 0.18),
+        inset 0 -1px 0 rgba(232, 24, 94, 0.12);
+    }
+
+    /* Taller metallic ribbon bar — gold shimmer sweep + rose flash */
+    .card-ribbon-bar {
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg,
+          transparent 0%,
+          rgba(201,162,39,0.4) 8%,
+          #c9a227 22%,
+          #fff8d4 38%,
+          #e8185e 50%,
+          #fff8d4 62%,
+          #c9a227 78%,
+          rgba(201,162,39,0.4) 92%,
+          transparent 100%);
+      background-size: 300% 100%;
+      animation: shineBar 4s linear infinite;
+      box-shadow: 0 0 18px rgba(201, 162, 39, 0.6), 0 0 8px rgba(232, 24, 94, 0.4);
+    }
+
+    @keyframes shineBar {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Premium Gold Corner Ornaments — glowing, animated */
+    .card-corner {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      pointer-events: none;
+      border: 1.5px solid rgba(224, 191, 106, 0.7);
+      z-index: 2;
+      transition: all 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: cornerPulse 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes cornerPulse {
+      0%   { border-color: rgba(224, 191, 106, 0.5); filter: drop-shadow(0 0 3px rgba(224,191,106,0.2)); }
+      100% { border-color: rgba(255, 248, 212, 0.95); filter: drop-shadow(0 0 8px rgba(255,248,212,0.6)); }
+    }
+
+    .card-corner::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid rgba(232, 24, 94, 0.25);
+    }
+
+    .card-corner::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #fff8d4, #c9a227);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(201, 162, 39, 0.8);
+    }
+
+    .card-corner--tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+    .card-corner--tl::after { top: -3px; left: -3px; }
+
+    .card-corner--tr { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+    .card-corner--tr::after { top: -3px; right: -3px; left: auto; }
+
+    .card-corner--bl { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+    .card-corner--bl::after { bottom: -3px; left: -3px; top: auto; }
+
+    .card-corner--br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+    .card-corner--br::after { bottom: -3px; right: -3px; top: auto; left: auto; }
+
+    /* Corners tighten inward on hover */
+    .greeting-card:hover .card-corner--tl { transform: translate(3px, 3px); }
+    .greeting-card:hover .card-corner--tr { transform: translate(-3px, 3px); }
+    .greeting-card:hover .card-corner--bl { transform: translate(3px, -3px); }
+    .greeting-card:hover .card-corner--br { transform: translate(-3px, -3px); }
+
+    /* Deep rose atmospheric glow layer at the top */
+    .greeting-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 32px;
+      background:
+        radial-gradient(ellipse at 50% -10%, rgba(232, 24, 94, 0.45) 0%, transparent 60%),
+        radial-gradient(ellipse at 10% 100%, rgba(201, 162, 39, 0.20) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 100%, rgba(201, 162, 39, 0.15) 0%, transparent 45%);
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.55s ease;
+    }
+
+    .greeting-card:hover::before {
+      opacity: 1.2;
+    }
+
+    /* Inner inset border frame for premium depth */
+    .greeting-card::after {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 24px;
+      pointer-events: none;
+      z-index: 0;
+      box-shadow: inset 0 0 40px rgba(232, 24, 94, 0.08);
+    }
+
+    /* Card body */
+    .card-body {
+      position: relative;
+      z-index: 1;
+      padding: 2.5rem 3.5rem 2.5rem;
+    }
+
+    /* Card header */
+    .card-header {
+      text-align: center;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px dashed rgba(201, 162, 39, 0.22);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    /* Handwritten romantic subtitle — warmer, more glowing */
+    .card-pre-title {
+      display: block;
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 600;
+      color: #fff3d4;
+      text-shadow: 0 0 30px rgba(255, 220, 160, 0.8), 0 2px 8px rgba(0,0,0,0.6);
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.04em;
+      animation: subtitleGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes subtitleGlow {
+      0% { text-shadow: 0 0 20px rgba(255, 220, 160, 0.6), 0 2px 8px rgba(0,0,0,0.4); transform: scale(1); }
+      100% { text-shadow: 0 0 40px rgba(255, 220, 160, 1), 0 0 20px rgba(232, 24, 94, 0.6), 0 2px 10px rgba(0,0,0,0.6); transform: scale(1.02); }
+    }
+
+    /* Animated shimmer gold title */
+    .card-main-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5.8vw, 4rem);
+      font-weight: 900;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+
+      /* Animating gold-to-rose shimmer */
+      background: linear-gradient(90deg,
+          #fff8d4 0%,
+          #e0bf6a 18%,
+          #ffffff 35%,
+          #ffd0a0 50%,
+          #ffffff 65%,
+          #e0bf6a 82%,
+          #fff8d4 100%);
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.7));
+      animation: titleShimmer 5s linear infinite;
+    }
+
+    @keyframes titleShimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 250% center; }
+    }
+
+    .card-header-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 1.2rem;
+    }
+
+    .header-line {
+      flex: 1;
+      max-width: 100px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.55), rgba(232,24,94,0.3), rgba(201, 162, 39, 0.55), transparent);
+    }
+
+    /* ========================================
+       POEM PAGES (DYNAMIC EDITION)
+======================================== */
+    #pages-container {
+      min-height: 280px;
+      position: relative;
+      perspective: 1000px;
+      /* Preps the container for elegant depth mechanics */
+    }
+
+    .poem-page {
+      /* Hide page cleanly from layout while allowing transitions */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      visibility: hidden;
+
+      /* High-end easing curve for page flips/switches */
+      transition:
+        opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+        visibility 0.5s;
+    }
+
+    .poem-page.active {
+      position: relative;
+      /* Restores height footprint back to container */
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+      visibility: visible;
+    }
+
+    /* Page heading — glowing animated gradient */
+    .poem-page h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.8rem, 4.2vw, 2.6rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1rem;
+      -webkit-font-smoothing: antialiased;
+
+      /* Warm gold-to-white shimmer gradient text */
+      background: linear-gradient(90deg,
+        #fff3c4 0%, #e0bf6a 30%, #ffffff 50%, #e0bf6a 70%, #fff3c4 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: h2Shimmer 4s linear infinite;
+      filter: drop-shadow(0 0 12px rgba(201, 162, 39, 0.5));
+    }
+
+    @keyframes h2Shimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* Poem body text — richer rose-warm tone */
+    .poem-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+      line-height: 2.1;
+      color: rgba(255, 238, 245, 0.92);
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+      text-shadow: 0 1px 6px rgba(232, 24, 94, 0.1);
+    }
+
+    /* Bold inline accents — animated shimmer */
+    .poem-text b {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: normal;
+      font-weight: 700;
+      background: linear-gradient(90deg,
+        #ffffff 0%, #fff3c4 20%, #e0bf6a 45%, #fff3c4 70%, #ffffff 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: bShimmer 6s linear infinite;
+      display: inline-block;
+      filter: drop-shadow(0 0 6px rgba(201, 162, 39, 0.4));
+    }
+
+    @keyframes bShimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* Italic blocks — soft rose glow */
+    .poem-text i {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: rgba(255, 210, 228, 0.62);
+      text-shadow: 0 0 12px rgba(232, 24, 94, 0.15);
+    }
+
+    /* Stanza separator — centered dot ornament with glow lines */
+    .poem-separator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0.9rem 0;
+      opacity: 1;
+    }
+
+    .poem-separator::before,
+    .poem-separator::after {
+      content: '';
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,162,39,0.5), transparent);
+    }
+
+    .poem-separator {
+      color: #c9a227;
+      font-size: 0.65rem;
+      letter-spacing: 0.6em;
+      opacity: 0.7;
+    }
+
+    /* Elegant signature block */
+    .poem-signed {
+      display: block;
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+      font-weight: 600;
+      text-align: right;
+      margin-top: 3rem;
+      background: linear-gradient(90deg, #ffffff, #fff8d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 8px rgba(201, 162, 39, 0.25));
+    }
+
+    /* ========================================
+       VIDEO PAGE
+    ======================================== */
+    /* Elegant champagne gold handwritten caption above the video */
+    .video-label {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      -webkit-font-smoothing: antialiased;
+
+      /* Glowing gradient text */
+      background: linear-gradient(90deg, #fff3c4 0%, #e0bf6a 30%, #ffffff 50%, #e0bf6a 70%, #fff3c4 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: h2Shimmer 4s linear infinite;
+      filter: drop-shadow(0 0 12px rgba(201, 162, 39, 0.6));
+    }
+
+    /* Double-bordered metallic framing for the video viewport */
+    .video-frame {
+      position: relative;
+      border-radius: 20px;
+      padding: 4px;
+      background: linear-gradient(135deg, rgba(201,162,39,0.8), rgba(232,24,94,0.4), rgba(201,162,39,0.8));
+      background-size: 200% 200%;
+      animation: videoFrameShine 5s linear infinite;
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.9),
+        0 0 40px rgba(232, 24, 94, 0.25),
+        0 0 20px rgba(201, 162, 39, 0.15);
+    }
+
+    @keyframes videoFrameShine {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* The polished video element */
+    .intro-video {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      max-height: 400px;
+      object-fit: cover;
+      background: #040002;
+      transform: translateZ(0);
+    }
+
+    /* Force-hide any native browser control interfaces or overlays */
+    .intro-video::-webkit-media-controls {
+      display: none !important;
+    }
+
+    .intro-video::-webkit-media-controls-enclosure {
+      display: none !important;
+    }
+
+    .intro-video::-webkit-media-controls-panel {
+      display: none !important;
+    }
+
+
+
+    /* ========================================
+       NAVIGATION
+    ======================================== */
+    .nav-section {
+      margin-top: 1.2rem;
+      padding-top: 1.2rem;
+      /* Soft dashed line in gold separating content from controls */
+      border-top: 1px dashed rgba(201, 162, 39, 0.2);
+    }
+
+    /* Page dots stylized as miniature royal pearls/gemstones */
+    .page-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.6rem;
+    }
+
+    .page-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      /* Warm muted gold for inactive dots */
+      background: rgba(224, 191, 106, 0.2);
+      border: 1px solid rgba(224, 191, 106, 0.4);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 0;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    /* Elongated rose-gold gemstone for the active page */
+    .page-dot.active {
+      background: linear-gradient(135deg, #ff4d8b, #e8185e);
+      border: 1px solid #ff99bb;
+      box-shadow:
+        0 0 15px rgba(232, 24, 94, 0.8),
+        0 0 5px rgba(255, 248, 212, 0.5);
+      transform: scale(1.2);
+      width: 24px;
+      border-radius: 12px;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Standard Royal Navigation Button (Velvet Crimson theme) */
+    .nav-btn {
+      position: relative;
+      padding: 0.75rem 2rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 235, 242, 0.95);
+      background: linear-gradient(135deg, rgba(138, 6, 44, 0.4), rgba(60, 0, 15, 0.6));
+      border: 1px solid rgba(214, 18, 80, 0.5);
+      border-radius: 999px;
+      cursor: pointer;
+      outline: none;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    /* Shine effect for nav buttons */
+    .nav-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+      transform: skewX(-25deg);
+      transition: left 0.5s ease;
+    }
+
+    .nav-btn:hover {
+      background: linear-gradient(135deg, rgba(214, 18, 80, 0.6), rgba(138, 6, 44, 0.8));
+      border-color: #e0bf6a;
+      color: #ffffff;
+      box-shadow:
+        0 8px 25px rgba(214, 18, 80, 0.5),
+        0 0 15px rgba(224, 191, 106, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .nav-btn:hover::before {
+      left: 150%;
+    }
+
+    .nav-btn:active {
+      transform: translateY(0) scale(0.97);
+    }
+
+    /* Close Button variation (Champagne Gold theme) */
+    .nav-btn.close-btn {
+      background: linear-gradient(135deg, rgba(201, 162, 39, 0.15), rgba(80, 60, 10, 0.4));
+      border-color: rgba(224, 191, 106, 0.45);
+      color: #fff8d4;
+    }
+
+    .nav-btn.close-btn:hover {
+      background: linear-gradient(135deg, rgba(201, 162, 39, 0.3), rgba(150, 110, 20, 0.6));
+      border-color: #ffffff;
+      color: #ffffff;
+      box-shadow:
+        0 8px 25px rgba(201, 162, 39, 0.4),
+        0 0 20px rgba(255, 248, 212, 0.3);
+    }
+
+    /* ========================================
+       AUDIO INDICATOR & PLAYER
+    ======================================== */
+    .audio-pill {
+      position: fixed;
+      bottom: 1.6rem;
+      right: 1.6rem;
+      z-index: 60;
+      width: 110px;
+      height: 40px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, rgba(40, 0, 18, 0.8), rgba(20, 0, 8, 0.9));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(201, 162, 39, 0.4);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 10px rgba(232, 24, 94, 0.3);
+      font-family: 'Lato', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--gold-light);
+      cursor: pointer;
+      overflow: hidden;
+      transition:
+        width 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        height 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        bottom 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        right 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        border-radius 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        background 0.4s ease,
+        box-shadow 0.4s ease;
+    }
+
+    .audio-pill:hover {
+      background: linear-gradient(135deg, rgba(80, 0, 36, 0.95), rgba(40, 0, 18, 0.95));
+      border-color: #fff8d4;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6), 0 0 20px rgba(232, 24, 94, 0.5), 0 0 10px rgba(201, 162, 39, 0.4);
+    }
+
+    .audio-pill.expanded {
+      width: min(340px, calc(100vw - 3.2rem));
+      height: 260px;
+      bottom: max(calc(50vh - 130px), 1.6rem);
+      right: max(calc(50vw - 170px), 1.6rem);
+      border-radius: 24px;
+      cursor: default;
+      background: rgba(12, 0, 7, 0.92);
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.7),
+        0 0 50px rgba(232, 24, 94, 0.2),
+        0 0 25px rgba(201, 162, 39, 0.08);
+    }
+
+    #audio-pill-collapsed {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0 1rem;
+      transition: opacity 0.2s ease;
+    }
+
+    .audio-pill.expanded #audio-pill-collapsed {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .audio-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 14px;
+    }
+
+    .audio-bar {
+      width: 3px;
+      border-radius: 2px;
+      background: var(--rose-light);
+      animation: barDance 0.7s ease-in-out infinite alternate;
+    }
+
+    .audio-bar:nth-child(1) {
+      height: 5px;
+      animation-delay: 0s;
+    }
+
+    .audio-bar:nth-child(2) {
+      height: 12px;
+      animation-delay: 0.12s;
+    }
+
+    .audio-bar:nth-child(3) {
+      height: 8px;
+      animation-delay: 0.25s;
+    }
+
+    .audio-bar:nth-child(4) {
+      height: 14px;
+      animation-delay: 0.08s;
+    }
+
+    .audio-bar:nth-child(5) {
+      height: 5px;
+      animation-delay: 0.2s;
+    }
+
+    .audio-bars.paused .audio-bar {
+      animation: none;
+      height: 4px;
+    }
+
+    @keyframes barDance {
+      from {
+        transform: scaleY(0.3);
+      }
+
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    /* ========================================
+       RESPONSIVE
+    ======================================== */
+    @media (max-width: 760px) {
+      .card-body {
+        padding: 1.5rem 1.5rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .card-body {
+        padding: 1.2rem 1rem 1rem;
+      }
+
+      .poem-text {
+        font-size: 0.98rem;
+        line-height: 1.9;
+      }
+
+      .nav-btn {
+        padding: 0.5rem 1.1rem;
+        font-size: 0.78rem;
+      }
+    }
+
+
+    /* ============================================================
+       STATE 1 — CARD CLOSING ANIMATION
+       Triggered by JS adding `.card-closing` to #card-wrapper.
+       Fades out and slides the card upward simultaneously.
+    ============================================================ */
+    #card-wrapper.card-closing {
+      animation: cardSlideUp 0.65s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      pointer-events: none; /* prevent clicks during animation */
+    }
+
+    @keyframes cardSlideUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        /* Spec: opacity 0 + translateY(-20px) simultaneously */
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+    }
+
+
+    /* ============================================================
+       STATE 2 — MUSIC REVEAL OVERLAY
+       Full-screen centred overlay hidden by default.
+       JS adds `.visible` after the card animation ends.
+    ============================================================ */
+    /* ---- Ambient Backdrop Layer ---- */
+#music-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 2rem;
+
+  /* Multi-layered dark romantic atmosphere */
+  background: 
+    radial-gradient(circle at 50% 40%, rgba(232, 24, 94, 0.25) 0%, transparent 60%),
+    radial-gradient(circle at 50% 60%, rgba(201, 162, 39, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at center, rgba(12, 2, 8, 0.9) 0%, rgba(4, 0, 2, 0.98) 100%);
+  backdrop-filter: blur(16px);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#music-reveal.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Optional frosted-glass container wrapper to make text pop */
+#music-reveal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 2.5rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Shimmering Romantic Message ---- */
+#music-reveal-msg {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  text-align: center;
+  line-height: 1.2;
+  
+  /* Animated gradient text fill */
+  background: linear-gradient(135deg, #ffffff 0%, #ffe3ec 40%, #ffb3c6 70%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  filter: drop-shadow(0 0 18px rgba(232, 24, 94, 0.45));
+}
+
+#music-reveal.visible #music-reveal-msg {
+  animation: 
+    msgFadeUp 0.9s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both,
+    shimmerText 6s ease infinite;
+}
+
+@keyframes msgFadeUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes shimmerText {
+  to { background-position: 200% center; }
+}
+
+/* ---- Next-Gen Sparkle Button ---- */
+#play-music-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.1rem 2.8rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffffff;
+  
+  /* Vibrant liquid-mesh gradient */
+  background: linear-gradient(135deg, #ff1a6b 0%, #ff4d8b 30%, #e0bf6a 70%, #d4af37 100%);
+  background-size: 200% 200%;
+  
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  opacity: 0;
+
+  /* Subtle border highlight for depth */
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    0 10px 30px rgba(232, 24, 94, 0.4);
+
+  transition: 
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease,
+    background-position 0.5s ease;
+}
+
+#music-reveal.visible #play-music-btn {
+  animation:
+    btnEntrance 0.8s 0.45s cubic-bezier(0.16, 1, 0.3, 1) both,
+    sparkleGlow 3s 1.2s ease-in-out infinite alternate;
+}
+
+/* Hover and active states */
+#play-music-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  background-position: 100% 0%;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.8),
+    0 12px 30px -4px rgba(232, 24, 94, 0.6),
+    0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+#play-music-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+@keyframes btnEntrance {
+  from { opacity: 0; transform: translateY(30px) scale(0.85); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes sparkleGlow {
+  0% {
+    box-shadow: 
+      inset 0 1px 1px rgba(255, 255, 255, 0.6),
+      0 0 15px 2px rgba(232, 24, 94, 0.4),
+      0 0 30px 6px rgba(212, 175, 55, 0.2);
+  }
+  100% {
+    box-shadow: 
+      inset 0 1px 1px rgba(255, 255, 255, 0.8),
+      0 0 25px 8px rgba(232, 24, 94, 0.7),
+      0 0 50px 15px rgba(212, 175, 55, 0.35);
+  }
+}
+
+/* Rotating shimmer sweep */
+.sparkle-ring {
+  position: absolute;
+  inset: -100%;
+  width: 300%;
+  height: 300%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 255, 255, 0.45) 30deg,
+    transparent 60deg
+  );
+  animation: sparkleRotate 2.5s linear infinite;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+@keyframes sparkleRotate {
+  to { transform: rotate(360deg); }
+}
+
+/* Play Icon Styling */
+.btn-icon {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 10px solid #ffffff;
+  margin-right: 2px;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+}
+
+
+    /* ============================================================
+       EXPANDED MUSIC PLAYER — Card-Style Modal
+       Full-width album art, gradient overlay, song info,
+       progress bar, and controls. Centered on screen.
+    ============================================================ */
+
+    /* The expanded state makes the pill behave like a fixed overlay */
+    .audio-pill.expanded {
+      /* Expand to fill center of screen as a modal backdrop */
+      width: 100vw;
+      height: 100vh;
+      bottom: 0;
+      right: 0;
+      border-radius: 0;
+      background: rgba(4, 0, 2, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: none;
+      box-shadow: none;
+      cursor: default;
+      /* Center the inner card */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Hide collapsed pill when expanded */
+    .audio-pill.expanded #audio-pill-collapsed {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* The expanded content container fills the pill when expanded */
+    .player-expanded {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s 0.18s ease;
+    }
+
+    .audio-pill.expanded .player-expanded {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Dim backdrop click-away layer */
+    .player-backdrop {
+      display: none; /* backdrop is the pill itself now */
+    }
+
+    /* ---- The Card ---- */
+    .player-card {
+      position: relative;
+      width: min(500px, calc(100vw - 2.4rem));
+      border-radius: 28px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #1a000d 0%, #08080a 100%);
+      border: 1px solid rgba(201, 162, 39, 0.22);
+      box-shadow:
+        0 40px 100px rgba(0, 0, 0, 0.85),
+        0 0 60px rgba(232, 24, 94, 0.18),
+        0 0 30px rgba(201, 162, 39, 0.06);
+      display: flex;
+      flex-direction: column;
+      /* Entry animation */
+      animation: cardPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes cardPop {
+      from { transform: scale(0.88) translateY(30px); opacity: 0; }
+      to   { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    /* ---- Album Art Section ---- */
+    .player-cover-wrapper {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* Ambient crimson glow behind art */
+    .cover-ambient-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse at 50% 30%,
+        rgba(232, 24, 94, 0.55) 0%,
+        rgba(122, 0, 40, 0.4) 40%,
+        transparent 75%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Art: real cover image fills the wrapper */
+    .player-cover-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      z-index: 1;
+      /* Smooth fade to dark at the bottom */
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+      transition: transform 0.5s ease;
+    }
+
+    .player-card:hover .player-cover-img {
+      transform: scale(1.04);
+    }
+
+    /* Floating close button — top-right of art */
+    .player-close-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 10;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(8, 0, 4, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: rgba(255, 230, 240, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      font-size: 0;
+      line-height: 0;
+    }
+
+    .player-close-btn:hover {
+      background: var(--rose);
+      border-color: var(--rose);
+      color: #fff;
+      transform: scale(1.12);
+    }
+
+    /* EQ bars — floating top-left of art area */
+    .cover-eq-bars {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 10;
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 18px;
+    }
+
+    /* Reuse eq-bar keyframes from global .eq-bar */
+    .cover-eq-bars .eq-bar {
+      display: block;
+      width: 3px;
+      border-radius: 3px;
+      background: linear-gradient(to top, var(--gold), var(--rose-light));
+      animation: eqBounce var(--dur, 0.8s) var(--delay, 0s) ease-in-out infinite alternate;
+      transform-origin: bottom center;
+    }
+
+    .cover-eq-bars .eq-bar:nth-child(1) { height: 10px; --dur: 0.72s; --delay: 0.00s; }
+    .cover-eq-bars .eq-bar:nth-child(2) { height: 18px; --dur: 0.55s; --delay: 0.10s; }
+    .cover-eq-bars .eq-bar:nth-child(3) { height: 8px;  --dur: 0.85s; --delay: 0.05s; }
+    .cover-eq-bars .eq-bar:nth-child(4) { height: 14px; --dur: 0.60s; --delay: 0.22s; }
+    .cover-eq-bars .eq-bar:nth-child(5) { height: 10px; --dur: 0.48s; --delay: 0.08s; }
+
+    .cover-eq-bars.paused .eq-bar {
+      animation: none;
+      transform: scaleY(0.2);
+      opacity: 0.4;
+    }
+
+    /* ---- Song Title Block ---- */
+    .player-title-block {
+      padding: 16px 22px 0;
+      text-align: left;
+    }
+
+    .player-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-artist {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: rgba(255, 200, 215, 0.58);
+      margin: 4px 0 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ---- Action Row (shuffle + heart) ---- */
+    .player-info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px 0;
+    }
+
+    .action-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 200, 215, 0.45);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.22s ease;
+      flex-shrink: 0;
+    }
+
+    .action-btn:hover {
+      color: rgba(255, 200, 215, 0.9);
+      background: rgba(232, 24, 94, 0.12);
+    }
+
+    /* Heart button has rose fill */
+    .action-btn.action-heart {
+      color: var(--rose);
+      filter: drop-shadow(0 0 6px rgba(232, 24, 94, 0.5));
+    }
+
+    .action-btn.action-heart:hover {
+      color: var(--rose-light);
+      transform: scale(1.18);
+    }
+
+    /* ---- Progress Bar ---- */
+    .player-progress-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 14px 22px 0;
+    }
+
+    .player-progress {
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      position: relative;
+      cursor: pointer;
+      transition: height 0.2s ease;
+    }
+
+    .player-progress-wrapper:hover .player-progress {
+      height: 5px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--rose), var(--gold));
+      position: relative;
+      animation: progressSim 180s linear infinite;
+    }
+
+    @keyframes progressSim {
+      from { width: 0%; }
+      to   { width: 100%; }
+    }
+
+    .progress-thumb {
+      position: absolute;
+      right: -5px;
+      top: 50%;
+      transform: translateY(-50%) scale(0);
+      width: 11px;
+      height: 11px;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(232, 24, 94, 0.5);
+      transition: transform 0.2s ease;
+    }
+
+    .player-progress-wrapper:hover .progress-thumb {
+      transform: translateY(-50%) scale(1);
+    }
+
+    .player-timestamps {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      color: rgba(255, 200, 215, 0.38);
+      font-weight: 500;
+    }
+
+    /* ---- Playback Controls ---- */
+    .player-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 16px 22px 22px;
+    }
+
+    .ctrl-btn {
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      outline: none;
+      padding: 0;
+    }
+
+    .ctrl-btn.ctrl-secondary {
+      color: rgba(255, 200, 215, 0.6);
+      width: 36px;
+      height: 36px;
+    }
+
+    .ctrl-btn.ctrl-secondary:hover {
+      color: #ffffff;
+      transform: scale(1.12);
+    }
+
+    .ctrl-btn:active {
+      transform: scale(0.92) !important;
+    }
+
+    /* Solid rose Play/Pause button */
+    .ctrl-btn.ctrl-play {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose), var(--crimson));
+      color: #ffffff;
+      box-shadow:
+        0 6px 20px rgba(232, 24, 94, 0.5),
+        0 0 15px rgba(232, 24, 94, 0.3);
+    }
+
+    .ctrl-btn.ctrl-play:hover {
+      background: linear-gradient(135deg, var(--rose-light), var(--rose));
+      box-shadow:
+        0 8px 28px rgba(232, 24, 94, 0.7),
+        0 0 20px rgba(232, 24, 94, 0.4);
+      transform: scale(1.07);
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 500px) {
+      .player-card {
+        width: calc(100vw - 2.4rem);
+        border-radius: 22px;
+      }
+
+      .player-cover-wrapper {
+        height: 180px;
+      }
+    }
+
+    /* ============================================================
+       VIDEO SONG PLAYER (VSP) — Full Romantic Design
+       All styles for the collapsed pill, expanded card, video area,
+       title overlay, progress bar, controls, and animations.
+    ============================================================ */
+
+    /* ── Pill: pulsing heart dot ── */
+    .pill-heart-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--rose);
+      flex-shrink: 0;
+      box-shadow: 0 0 6px var(--rose);
+      animation: heartDotPulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes heartDotPulse {
+      0%, 100% { transform: scale(1);    opacity: 0.7; box-shadow: 0 0 4px var(--rose); }
+      50%       { transform: scale(1.4); opacity: 1;   box-shadow: 0 0 12px var(--rose), 0 0 20px rgba(232,24,94,0.4); }
+    }
+
+    /* ── Pill: collapsed label style ── */
+    #audio-pill-collapsed {
+      gap: 0.55rem;
+    }
+
+    #audio-label {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      color: var(--gold-light);
+    }
+
+    /* ── The expanded pill = full-screen blur backdrop ── */
+    .audio-pill.expanded {
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(232,24,94,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 30%, rgba(201,162,39,0.08) 0%, transparent 55%),
+        rgba(4, 0, 2, 0.88);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    /* ── Main player card ── */
+    .vsp-card {
+      width: min(800px, calc(100vw - 2rem));
+      height: 600px;
+      border-radius: 28px;
+      background: linear-gradient(180deg,
+        #1a0008 0%,
+        #0d0005 55%,
+        #080208 100%
+      );
+      border: 1px solid rgba(201,162,39,0.3);
+      box-shadow:
+        0 0 0 1px rgba(232,24,94,0.08) inset,
+        0 40px 90px rgba(0,0,0,0.9),
+        0 0 60px rgba(232,24,94,0.12),
+        0 0 120px rgba(201,162,39,0.06);
+      overflow: hidden;
+      position: relative;
+      animation:
+        vspCardIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both,
+        cardFloat 8s ease-in-out 0.8s infinite alternate;
+    }
+
+    @keyframes vspCardIn {
+      from { transform: scale(0.86) translateY(36px); opacity: 0; }
+      to   { transform: scale(1) translateY(0);       opacity: 1; }
+    }
+
+    /* ── Gold ribbon bars (top & bottom of card) ── */
+    .vsp-ribbon-bar {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(201,162,39,0.2) 15%,
+        var(--gold) 40%,
+        var(--gold-light) 50%,
+        var(--gold) 60%,
+        rgba(201,162,39,0.2) 85%,
+        transparent 100%
+      );
+      flex-shrink: 0;
+    }
+
+    .vsp-ribbon-bottom {
+      margin-top: 2px;
+    }
+
+    /* ── Video area ── */
+    .vsp-video-wrapper {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      background: #000;
+      flex-shrink: 0;
+    }
+
+    /* The <video> fills the wrapper */
+    .vsp-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      display: block;
+    }
+
+    /* Layered gradient over video — romantic dark fade */
+    .vsp-video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(10,0,4,0.15) 0%,
+          transparent 30%,
+          rgba(8,0,4,0.5) 70%,
+          rgba(4,0,2,0.95) 100%
+        ),
+        linear-gradient(
+          to right,
+          rgba(232,24,94,0.06) 0%,
+          transparent 50%,
+          rgba(201,162,39,0.04) 100%
+        );
+    }
+
+    /* ── Close button ── */
+    .vsp-close-btn {
+      top: 12px !important;
+      right: 12px !important;
+      width: 28px !important;
+      height: 28px !important;
+      background: rgba(6, 0, 3, 0.6) !important;
+      border: 1px solid rgba(201,162,39,0.3) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .vsp-close-btn:hover {
+      background: var(--crimson) !important;
+      border-color: var(--rose) !important;
+      transform: scale(1.12) rotate(90deg) !important;
+    }
+
+    /* ── EQ bars on video ── */
+    .cover-eq-bars {
+      top: 12px;
+      left: 12px;
+    }
+
+    /* ── Centre play button ── */
+    .vsp-center-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      z-index: 10;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose), var(--crimson));
+      border: 2px solid rgba(255,200,215,0.4);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow:
+        0 8px 32px rgba(232,24,94,0.6),
+        0 0 0 0 rgba(232,24,94,0.3);
+      transition:
+        transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    /* Pulsing outer ring */
+    .vsp-center-play-ring {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid rgba(232,24,94,0.5);
+      animation: centerPlayRing 2s ease-out infinite;
+    }
+
+    @keyframes centerPlayRing {
+      0%   { opacity: 0.7; transform: scale(1); }
+      100% { opacity: 0;   transform: scale(1.5); }
+    }
+
+    .vsp-center-play:hover {
+      background: linear-gradient(135deg, var(--rose-light), var(--rose));
+      transform: translate(-50%, -50%) scale(1.1);
+      box-shadow:
+        0 12px 40px rgba(232,24,94,0.75),
+        0 0 0 8px rgba(232,24,94,0.12);
+    }
+
+    /* Hidden state */
+    .vsp-center-play.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    /* ── Title overlay at bottom of video ── */
+    .vsp-video-title-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 4;
+      padding: 20px 20px 14px;
+      pointer-events: none;
+    }
+
+    .vsp-video-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      font-style: italic;
+      color: #fff;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.7), 0 0 20px rgba(232,24,94,0.3);
+      margin: 0 0 3px;
+      /* Shimmer gold shine effect */
+      background: linear-gradient(100deg,
+        #ffffff 20%,
+        var(--gold-light) 45%,
+        #ffffff 55%,
+        rgba(255,200,215,0.9) 80%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleShimmer 4s linear infinite;
+    }
+
+    @keyframes titleShimmer {
+      to { background-position: 200% center; }
+    }
+
+    .vsp-video-subtitle {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: rgba(255,200,215,0.6);
+      letter-spacing: 0.06em;
+      margin: 0;
+    }
+
+    /* ── Controls panel (below video) ── */
+    .vsp-controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 14px 18px 0;
+      background: linear-gradient(180deg, rgba(20,0,8,0) 0%, rgba(12,0,6,0.6) 100%);
+    }
+
+    /* ── Progress bar section ── */
+    .vsp-progress-section {
+      padding: 0 0 6px;
+    }
+
+    /* Thicker, more tactile progress bar */
+    .vsp-progress-track {
+      height: 4px !important;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      cursor: pointer;
+      transition: height 0.2s ease !important;
+    }
+
+    .vsp-progress-section:hover .vsp-progress-track {
+      height: 6px !important;
+    }
+
+    .vsp-progress-track .progress-fill {
+      animation: none !important;
+      transition: width 0.12s linear;
+      background: linear-gradient(90deg, var(--rose), var(--gold));
+      border-radius: 999px;
+      box-shadow: 0 0 8px rgba(232,24,94,0.5);
+    }
+
+    /* Glowing thumb */
+    .vsp-progress-track .progress-thumb {
+      width: 13px;
+      height: 13px;
+      background: #fff;
+      box-shadow:
+        0 0 0 2px rgba(232,24,94,0.5),
+        0 0 10px rgba(232,24,94,0.6);
+      right: -6px;
+    }
+
+    .player-timestamps {
+      color: rgba(255,200,215,0.4);
+      font-size: 0.66rem;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    /* ── Main controls row ── */
+    .vsp-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0 14px;
+      gap: 0;
+    }
+
+    /* ── Volume group ── */
+    .vsp-volume-wrap {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex: 1;
+      justify-content: flex-start;
+    }
+
+    .vsp-vol-btn {
+      color: rgba(255,200,215,0.45);
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      transition: color 0.2s ease, transform 0.2s ease !important;
+    }
+
+    .vsp-vol-btn:hover {
+      color: var(--rose-pale);
+      transform: scale(1.15) !important;
+    }
+
+    /* Volume slider — custom pill */
+    .vsp-volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 60px;
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      outline: none;
+      cursor: pointer;
+      transition: height 0.2s ease, background 0.2s ease;
+    }
+
+    .vsp-volume-slider:hover {
+      height: 5px;
+    }
+
+    .vsp-volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose-light), var(--rose));
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(232,24,94,0.55);
+      transition: transform 0.15s ease;
+    }
+
+    .vsp-volume-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
+
+    .vsp-volume-slider::-moz-range-thumb {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose-light), var(--rose));
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(232,24,94,0.55);
+    }
+
+    /* ── Secondary skip buttons ── */
+    .vsp-controls .ctrl-secondary {
+      color: rgba(255,200,215,0.5);
+      width: 34px;
+      height: 34px;
+      transition: color 0.2s ease, transform 0.2s ease !important;
+    }
+
+    .vsp-controls .ctrl-secondary:hover {
+      color: var(--rose-pale);
+      transform: scale(1.15) !important;
+    }
+
+    /* ── Play/Pause button — rose gradient circle ── */
+    .vsp-controls .ctrl-play {
+      width: 50px !important;
+      height: 50px !important;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--rose-light) 0%, var(--rose) 50%, var(--crimson) 100%);
+      color: #fff;
+      box-shadow:
+        0 6px 20px rgba(232,24,94,0.5),
+        0 0 0 3px rgba(232,24,94,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.25);
+      transition:
+        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.2s ease,
+        background 0.2s ease !important;
+    }
+
+    .vsp-controls .ctrl-play:hover {
+      background: linear-gradient(145deg, #ff80a8 0%, var(--rose-light) 50%, var(--rose) 100%);
+      transform: scale(1.1) !important;
+      box-shadow:
+        0 10px 28px rgba(232,24,94,0.7),
+        0 0 0 5px rgba(232,24,94,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+
+    .vsp-controls .ctrl-play:active {
+      transform: scale(0.95) !important;
+    }
+
+    /* ── Fullscreen button group (right) ── */
+    .vsp-fs-btn {
+      flex: 1;
+      display: flex !important;
+      justify-content: flex-end;
+      color: rgba(255,200,215,0.4);
+      width: 28px;
+      height: 28px;
+      transition: color 0.2s ease, transform 0.2s ease !important;
+    }
+
+    .vsp-fs-btn:hover {
+      color: var(--gold-light);
+      transform: scale(1.18) !important;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .vsp-card {
+        width: calc(100vw - 1.2rem);
+        border-radius: 22px;
+      }
+
+      .vsp-video-wrapper {
+        height: 190px;
+      }
+
+      .vsp-volume-slider {
+        width: 46px;
+      }
+
+      .vsp-controls .ctrl-play {
+        width: 44px !important;
+        height: 44px !important;
+      }
+    }
+
+    /* ============================================================
+       STATE 5 — SURPRISE BUTTON REVEAL
+    ============================================================ */
+    #surprise-reveal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(12, 0, 7, 0.95);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+
+    #surprise-reveal.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .surprise-teaser {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-style: italic;
+      color: var(--gold-light);
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s 0.4s ease;
+    }
+
+    #surprise-reveal.visible .surprise-teaser {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #surprise-btn {
+      position: relative;
+      background: linear-gradient(135deg, #ff1a6b, #d61250);
+      border: 2px solid #fff8d4;
+      border-radius: 50px;
+      padding: 18px 45px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      box-shadow: 
+        0 15px 35px rgba(232, 24, 94, 0.5),
+        0 0 15px rgba(201, 162, 39, 0.4);
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.8s 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
+    }
+    
+    /* Shimmer sweep inside the button */
+    #surprise-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-20deg);
+      animation: surpriseShine 3s infinite;
+    }
+
+    @keyframes surpriseShine {
+      0% { left: -100%; }
+      20% { left: 200%; }
+      100% { left: 200%; }
+    }
+
+    @keyframes btnPulseGlow {
+      0%, 100% { box-shadow: 0 15px 35px rgba(232, 24, 94, 0.5), 0 0 15px rgba(201, 162, 39, 0.4); }
+      50% { box-shadow: 0 20px 50px rgba(232, 24, 94, 0.9), 0 0 35px rgba(255, 248, 212, 0.7); }
+    }
+
+    #surprise-reveal.visible #surprise-btn {
+      opacity: 1;
+      transform: scale(1);
+      animation: btnPulseGlow 2.5s infinite 1.8s;
+    }
+
+    #surprise-btn:hover {
+      transform: scale(1.08) translateY(-4px) !important;
+      box-shadow: 
+        0 25px 50px rgba(232, 24, 94, 0.9),
+        0 0 40px rgba(255, 248, 212, 0.8) !important;
+      background: linear-gradient(135deg, #ff4d8b, #e8185e);
+      animation: none; /* pause pulse on hover */
+    }
+
+    .surprise-gift-icon {
+      width: 32px;
+      height: 32px;
+      animation: wiggle 2s infinite ease-in-out;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      10% { transform: rotate(10deg); }
+      20% { transform: rotate(-10deg); }
+      30% { transform: rotate(5deg); }
+      40% { transform: rotate(-5deg); }
+      50% { transform: rotate(0deg); }
+    }
+
+    .surprise-label {
+      font-family: 'Lato', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .surprise-ring {
+      position: absolute;
+      inset: -6px;
+      border: 2px dashed var(--gold);
+      border-radius: 60px;
+      animation: spin 10s linear infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Particles for surprise */
+    .surprise-particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .s-particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--gold);
+      animation: floatUp 4s infinite linear;
+      opacity: 0;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+    }
+    
+    .s-particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .s-particle:nth-child(2) { left: 30%; animation-delay: 2s; animation-duration: 5s; }
+    .s-particle:nth-child(3) { left: 50%; animation-delay: 1s; animation-duration: 3.5s; }
+    .s-particle:nth-child(4) { left: 70%; animation-delay: 3s; animation-duration: 4.5s; }
+    .s-particle:nth-child(5) { left: 90%; animation-delay: 0.5s; }
+    .s-particle:nth-child(6) { left: 20%; animation-delay: 1.5s; }
+    .s-particle:nth-child(7) { left: 60%; animation-delay: 2.5s; }
+    .s-particle:nth-child(8) { left: 80%; animation-delay: 0.8s; }
+
+    /* ============================================================
+       STATE 6 — VIDEO SURPRISE OVERLAY
+    ============================================================ */
+    #video-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+
+    .video-overlay-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(30, 2, 12, 0.95), rgba(5, 0, 2, 0.99));
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+    }
+
+    #video-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .video-reveal-label {
+      position: relative;
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 35px;
+      
+      /* Glowing gradient text */
+      background: linear-gradient(90deg, #fff3c4 0%, #e0bf6a 30%, #ffffff 50%, #e0bf6a 70%, #fff3c4 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: h2Shimmer 4s linear infinite;
+      filter: drop-shadow(0 0 15px rgba(201, 162, 39, 0.6));
+      
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.8s 0.5s ease;
+    }
+
+    #video-overlay.visible .video-reveal-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .video-frame-wrapper {
+      position: relative;
+      width: 90%;
+      max-width: 850px;
+      aspect-ratio: 16/9;
+      border-radius: 20px;
+      padding: 4px;
+      background: linear-gradient(135deg, rgba(201,162,39,0.9), rgba(232,24,94,0.5), rgba(201,162,39,0.9));
+      background-size: 200% 200%;
+      animation: videoFrameShine 6s linear infinite;
+      
+      box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.95), 
+        0 0 60px rgba(232, 24, 94, 0.35),
+        0 0 30px rgba(201, 162, 39, 0.25);
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.8s 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    #video-overlay.visible .video-frame-wrapper {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    #surprise-video {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      object-fit: contain;
+      background: #040002;
+    }
+
+    .video-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 210;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .video-close-btn:hover {
+      background: var(--rose);
+      transform: scale(1.1) rotate(90deg);
+    }
+
+
+    /* ============================================================
+       STATE 7 — FINAL WISHES
+    ============================================================ */
+    #final-wishes {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: radial-gradient(circle at center, #2b0010 0%, #0d0005 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.5s ease;
+    }
+
+    #final-wishes.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .wishes-card {
+      position: relative;
+      width: 90%;
+      max-width: 540px;
+      background: 
+        radial-gradient(ellipse at 50% 0%, rgba(232, 24, 94, 0.2) 0%, transparent 60%),
+        linear-gradient(170deg, rgba(38, 2, 15, 0.95) 0%, rgba(15, 0, 8, 0.98) 100%);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 2px solid transparent;
+      background-clip: padding-box, border-box;
+      background-origin: padding-box, border-box;
+      background-image:
+        radial-gradient(ellipse at 50% 0%, rgba(232, 24, 94, 0.2) 0%, transparent 60%),
+        linear-gradient(170deg, rgba(38, 2, 15, 0.95), rgba(15, 0, 8, 0.98)),
+        linear-gradient(120deg, rgba(255, 248, 212, 0.7) 0%, rgba(232, 24, 94, 0.4) 50%, rgba(255, 248, 212, 0.7) 100%);
+      border-radius: 28px;
+      padding: 38px 36px 32px;
+      text-align: center;
+      box-shadow:
+        0 50px 100px rgba(0, 0, 0, 0.85),
+        0 0 80px rgba(232, 24, 94, 0.25),
+        0 0 40px rgba(201, 162, 39, 0.15),
+        inset 0 1px 0 rgba(255, 248, 212, 0.15);
+      transform: translateY(30px) scale(0.95);
+      opacity: 0;
+      transition: all 1.5s 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    #final-wishes.visible .wishes-card {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .wishes-crown {
+      font-size: 2.5rem;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+    }
+
+    .wishes-pre {
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 6px;
+    }
+
+    .wishes-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      line-height: 1.1;
+      color: var(--gold-light);
+      margin-bottom: 10px;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    .wishes-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin: 14px 0;
+    }
+
+    .wishes-line {
+      height: 1px;
+      width: 60px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .wishes-msg {
+      font-family: 'Lato', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 14px;
+    }
+
+    .wishes-closing {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--rose-light);
+      margin-bottom: 20px;
+    }
+    
+    .wishes-signature {
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 0;
+    }
+
+    /* Close button for final wishes card */
+    .wishes-close-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 10;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(232, 24, 94, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(232, 24, 94, 0.35);
+      color: rgba(255, 200, 215, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      outline: none;
+    }
+
+    .wishes-close-btn:hover {
+      background: var(--rose);
+      border-color: var(--rose);
+      color: #fff;
+      transform: scale(1.12) rotate(90deg);
+      box-shadow: 0 0 16px rgba(232, 24, 94, 0.5);
+    }
+
+    .wishes-particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .w-heart {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0;
+      animation: driftUp 8s infinite linear;
+    }
+
+    @keyframes driftUp {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+
+    .w-heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .w-heart:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 9s; font-size: 1rem; }
+    .w-heart:nth-child(3) { left: 35%; animation-delay: 4s; animation-duration: 7s; }
+    .w-heart:nth-child(4) { left: 50%; animation-delay: 1s; font-size: 2rem; }
+    .w-heart:nth-child(5) { left: 65%; animation-delay: 5s; animation-duration: 10s; }
+    .w-heart:nth-child(6) { left: 80%; animation-delay: 3s; font-size: 1.2rem; }
+    .w-heart:nth-child(7) { left: 90%; animation-delay: 6s; }
+    .w-heart:nth-child(8) { left: 5%; animation-delay: 7s; animation-duration: 8.5s; }
+
+    @media (max-width: 500px) {
+      .wishes-card {
+        padding: 30px 20px;
+      }
+      .wishes-name {
+        font-size: 2.2rem;
+      }
+      .wishes-msg {
+        font-size: 1rem;
+      }
+      .wishes-closing {
+        font-size: 1.1rem;
+      }
+    }
