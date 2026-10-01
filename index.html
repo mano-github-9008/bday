@@ -125,7 +125,7 @@
             <p class="video-label">A Little Something, Just For You</p>
             <div class="video-frame">
               <video controls autoplay loop muted playsinline class="intro-video" preload="metadata">
-                <source src="Spclvid3.mp4" type="video/mp4" />
+                <source src="https://jgwsixdqbmkyzknnxfap.supabase.co/storage/v1/object/sign/academic-files/Spclvid3.mp4?token=eyJraWQiOiIwM2YwZGUzOC05ZjEyLTRhZDYtYTdkMS1jZGEzY2JiN2Y1ZjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhY2FkZW1pYy1maWxlcy9TcGNsdmlkMy5tcDQiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NDQ0NzA5LCJleHAiOjE4MTk5ODA3MDl9.P8wF9koCkf3pN1uiErNib7xAjq2FbtovwtpLZXqxQR4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
@@ -1036,7 +1036,6 @@
           <div class="nav-buttons">
             <button class="nav-btn" id="prev-btn" aria-label="Previous page">Prev</button>
             <button class="nav-btn" id="next-btn" aria-label="Next page">Next</button>
-            <button class="nav-btn close-btn" id="close-btn" aria-label="Close card">Close</button>
           </div>
         </div>
 
@@ -1106,7 +1105,10 @@
             playsinline
             preload="metadata"
           >
-            <source src="love.mp4" type="video/mp4" />
+           
+  <source
+    src="https://www.dropbox.com/scl/fi/951rjhnd5wr02zvnxj3u2/love.mp4?rlkey=z166j15pbv2ykq9vgxenqd2qw&st=q0q67h4i&raw=1"
+    type="video/mp4">
           </video>
 
           <!-- Bottom gradient fade -->
@@ -1288,52 +1290,12 @@
 
     <button id="surprise-btn" aria-label="Open your birthday surprise">
       <span class="surprise-ring"></span>
-      <svg class="surprise-gift-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="24" width="48" height="36" rx="4" fill="url(#giftGrad)" opacity="0.95"/>
-        <rect x="4" y="17" width="56" height="11" rx="3" fill="url(#ribbonGrad)"/>
-        <line x1="32" y1="17" x2="32" y2="60" stroke="#fff8d4" stroke-width="2.5" opacity="0.55"/>
-        <path d="M32 18 C32 18 22 12 20 7 C18 2 25 0 29 5 C31 8 32 14 32 18Z" fill="#c9a227"/>
-        <path d="M32 18 C32 18 42 12 44 7 C46 2 39 0 35 5 C33 8 32 14 32 18Z" fill="#e8185e"/>
-        <circle cx="32" cy="15" r="4.5" fill="#fff8d4"/>
-        <defs>
-          <linearGradient id="giftGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#7a0028"/>
-            <stop offset="100%" stop-color="#3d0014"/>
-          </linearGradient>
-          <linearGradient id="ribbonGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#c9a227"/>
-            <stop offset="50%" stop-color="#fff8d4"/>
-            <stop offset="100%" stop-color="#c9a227"/>
-          </linearGradient>
-        </defs>
-      </svg>
-      <span class="surprise-label">Open Your Surprise</span>
+      
+      <span class="surprise-label">Read Only if you really want to !</span>
     </button>
   </div><!-- /surprise-reveal -->
 
-  <!-- ==================================
-       VIDEO SURPRISE OVERLAY (State 6)
-       Full-screen video reveal.
-       Hidden by default; JS adds .visible.
-  ================================== -->
-  <div id="video-overlay">
-    <div class="video-overlay-bg"></div>
 
-    <button class="video-close-btn" id="video-close-btn" aria-label="Close video">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
-
-    <p class="video-reveal-label">🎬 A Special Birthday Message For You</p>
-
-    <div class="video-frame-wrapper">
-      <video id="surprise-video" playsinline>
-        <source src="Spclvid2.mp4" type="video/mp4" />
-      </video>
-    </div>
-  </div><!-- /video-overlay -->
 
   <!-- ==================================
        FINAL WISHES (State 7)

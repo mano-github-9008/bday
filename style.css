@@ -2,37 +2,44 @@
        ROOT — DESIGN TOKENS
     ======================================== */
     :root {
-      --bg-deepest: #040002;
-      --bg-dark: #0d0007;
-      --bg-mid: #1a000d;
-      --bg-card: rgba(30, 0, 14, 0.82);
+      --bg-deepest: #020001;
+      --bg-dark: #080005;
+      --bg-mid: #130009;
+      --bg-card: rgba(22, 0, 10, 0.90);
 
       --rose: #e8185e;
       --rose-light: #ff4d8b;
       --rose-pale: #ffc0d4;
-      --rose-glow: rgba(232, 24, 94, 0.55);
-      --rose-glow-soft: rgba(232, 24, 94, 0.18);
+      --rose-glow: rgba(232, 24, 94, 0.65);
+      --rose-glow-soft: rgba(232, 24, 94, 0.22);
 
-      --crimson: #7a0028;
-      --crimson-deep: #3d0014;
+      --crimson: #8a0030;
+      --crimson-deep: #430018;
 
-      --gold: #c9a227;
-      --gold-light: #e0bf6a;
-      --gold-pale: rgba(201, 162, 39, 0.25);
+      --gold: #d4af37;
+      --gold-light: #f0d060;
+      --gold-pale: rgba(212, 175, 55, 0.28);
+      --gold-bright: #fff8d4;
 
-      --card-border: rgba(201, 162, 39, 0.45);
-      --card-border-inner: rgba(255, 180, 210, 0.12);
+      --purple-royal: #2d0045;
+      --purple-mid: rgba(80, 0, 120, 0.18);
 
-      --text-primary: #fff2f5;
-      --text-secondary: rgba(255, 235, 242, 0.75);
-      --text-dim: rgba(255, 210, 228, 0.48);
-      --text-poem: rgba(255, 230, 240, 0.85);
+      --card-border: rgba(212, 175, 55, 0.6);
+      --card-border-inner: rgba(255, 180, 210, 0.14);
 
-      --shadow-heart: 0 8px 32px rgba(232, 24, 94, 0.6);
-      --shadow-card: 0 40px 100px rgba(0, 0, 0, 0.85), 0 0 80px rgba(232, 24, 94, 0.12);
-      --shadow-btn: 0 6px 28px rgba(232, 24, 94, 0.5);
+      --text-primary: #fff5f8;
+      --text-secondary: rgba(255, 238, 245, 0.80);
+      --text-dim: rgba(255, 215, 232, 0.52);
+      --text-poem: rgba(255, 232, 243, 0.90);
 
-      --radius-card: 20px;
+      --shadow-heart: 0 8px 32px rgba(232, 24, 94, 0.7);
+      --shadow-card:
+        0 50px 120px rgba(0, 0, 0, 0.95),
+        0 0 100px rgba(232, 24, 94, 0.18),
+        0 0 60px rgba(212, 175, 55, 0.12);
+      --shadow-btn: 0 6px 28px rgba(232, 24, 94, 0.6);
+
+      --radius-card: 24px;
       --radius-pill: 999px;
     }
 
@@ -54,9 +61,10 @@
     body {
       font-family: 'Lato', sans-serif;
       background:
-        radial-gradient(ellipse at top right, rgba(232, 24, 94, 0.15), transparent 60%),
-        radial-gradient(circle at bottom left, rgba(201, 162, 39, 0.12), transparent 50%),
-        linear-gradient(to bottom, rgba(30, 0, 15, 0.65), rgba(10, 0, 5, 0.85)),
+        radial-gradient(ellipse at top right, rgba(232, 24, 94, 0.18), transparent 55%),
+        radial-gradient(ellipse at bottom left, rgba(212, 175, 55, 0.14), transparent 45%),
+        radial-gradient(ellipse at top left, rgba(80, 0, 120, 0.12), transparent 50%),
+        linear-gradient(to bottom, rgba(20, 0, 10, 0.82), rgba(5, 0, 3, 0.95)),
         url('./bday2.png') no-repeat center center fixed;
       background-size: cover;
       color: var(--text-primary);
@@ -66,22 +74,40 @@
       position: relative;
     }
 
-    /* Ambient pulsing overlay over the entire background */
+    /* Dual ambient pulsing overlays — rose + gold */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(255, 100, 150, 0.05) 0%, transparent 60%);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.06) 0%, transparent 55%),
+        radial-gradient(circle at 70% 80%, rgba(255, 100, 150, 0.07) 0%, transparent 55%);
       pointer-events: none;
       z-index: 1;
-      animation: ambientPulse 8s ease-in-out infinite alternate;
+      animation: ambientPulse 9s ease-in-out infinite alternate;
+    }
+
+    /* Subtle royal scanline texture overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 0, 0, 0.03) 3px,
+        rgba(0, 0, 0, 0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.4;
     }
 
     @keyframes ambientPulse {
-      0% { opacity: 0.3; transform: scale(1); }
-      100% { opacity: 1; transform: scale(1.1); }
+      0%  { opacity: 0.4; transform: scale(1); }
+      100% { opacity: 1;   transform: scale(1.08); }
     }
-
 
 
     /* ========================================
@@ -208,15 +234,16 @@
       display: none;
     }
 
-    /* "Happy" Tagline */
+    /* \"Happy\" Tagline */
     .l-pre {
       display: block;
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(2.5rem, 6vw, 3.8rem);
-      font-weight: 500;
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      font-weight: 600;
       color: #fff8d4;
-      margin-bottom: 0.25rem;
-      letter-spacing: 0.03em;
+      margin-bottom: 0.2rem;
+      letter-spacing: 0.06em;
+      text-shadow: 0 0 40px rgba(212, 175, 55, 0.5), 0 2px 10px rgba(0,0,0,0.6);
 
       animation: premiumReveal 1.2s var(--ease-out-expo) both;
       animation-delay: 0.1s;
@@ -224,16 +251,16 @@
 
     /* Master Title Container */
     .l-title-container {
-      margin: 0.25rem 0;
+      margin: 0.2rem 0;
     }
 
-    /* "Birthday" — Elegantly unified with structural text color */
+    /* "Birthday" — Cinzel Decorative for imperial grandeur */
     .l-title {
-      font-family: 'Dancing Script', cursive;
-      font-size: clamp(5rem, 15vw, 11rem);
-      font-weight: 700;
-      line-height: 0.95;
-      letter-spacing: -0.01em;
+      font-family: 'Cinzel Decorative', 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 12vw, 9rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: 0.04em;
       color: #ffffff;
 
       animation: premiumReveal 1.4s var(--ease-out-expo) both;
@@ -243,12 +270,16 @@
     /* Shared premium horizontal gold gradient */
     .l-title span,
     .l-post {
-      background: var(--gold-gradient);
-      background-size: 200% auto;
+      background: linear-gradient(90deg,
+        #fff8d4 0%, #f0d060 15%, #ffffff 30%,
+        #d4af37 45%, #fff8d4 55%, #f0d060 70%,
+        #ffffff 82%, #d4af37 100%);
+      background-size: 250% auto;
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: goldShimmer 8s linear infinite;
+      animation: goldShimmer 7s linear infinite;
+      filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.4));
     }
 
     /* "My Queen" */
@@ -256,23 +287,18 @@
       display: block;
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: clamp(2.4rem, 7vw, 4.5rem);
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      margin-top: 0.75rem;
+      font-size: clamp(2.6rem, 8vw, 5.2rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-top: 0.6rem;
 
-      animation: premiumReveal 1.4s var(--ease-out-expo) both, goldShimmer 8s linear infinite;
+      animation: premiumReveal 1.4s var(--ease-out-expo) both, goldShimmer 7s linear infinite;
       animation-delay: 0.4s;
     }
 
     @keyframes goldShimmer {
-      0% {
-        background-position: 0% center;
-      }
-
-      100% {
-        background-position: -200% center;
-      }
+      0%   { background-position: 0% center; }
+      100% { background-position: -250% center; }
     }
 
     /* Minimalist Ornamental Divider */
@@ -280,11 +306,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
+      gap: 2.2rem;
       width: 100%;
-      max-width: 320px;
-      /* Snugger line spacing looks cleaner */
-      margin: 3rem 0;
+      max-width: 340px;
+      margin: 2.8rem 0;
 
       animation: premiumReveal 1.4s var(--ease-out-expo) both;
       animation-delay: 0.55s;
@@ -293,7 +318,7 @@
     .l-ornament-line {
       flex: 1;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(224, 191, 106, 0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.6), rgba(255,248,212,0.4), transparent);
     }
 
     .l-ornament-heart {
@@ -323,72 +348,90 @@
     .l-tagline {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: clamp(1.15rem, 2.5vw, 1.5rem);
-      color: rgba(255, 245, 248, 0.8);
-      letter-spacing: 0.05em;
+      font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+      color: rgba(255, 248, 232, 0.82);
+      letter-spacing: 0.06em;
       margin-bottom: 4rem;
-      max-width: 540px;
-      line-height: 1.7;
+      max-width: 560px;
+      line-height: 1.75;
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
 
       animation: premiumReveal 1.4s var(--ease-out-expo) both;
       animation-delay: 0.7s;
     }
 
-    /* Modern High-End Interactive Button */
+    /* Royal Wax-Seal Button */
     #open-btn {
       position: relative;
-      padding: 1.25rem 4.5rem;
-      font-family: 'Lato', sans-serif;
-      font-size: 0.8rem;
+      padding: 1.35rem 5rem;
+      font-family: 'Cinzel Decorative', 'Lato', sans-serif;
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: #ffffff;
-      background: var(--berry-gradient);
-      background-size: 200% auto;
-      border: 1px solid rgba(224, 191, 106, 0.3);
+      color: #fff8d4;
+
+      /* Deep crimson-to-rose base */
+      background: linear-gradient(135deg,
+        #8a0030 0%, #c0003a 30%, #e8185e 55%, #c0003a 75%, #8a0030 100%);
+      background-size: 250% auto;
+      border: none;
       border-radius: 100px;
       cursor: pointer;
       outline: none;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(159, 18, 57, 0.25);
 
-      /* Smooth properties transition instead of 'all' */
-      transition: transform 0.3s var(--ease-out-expo),
-        box-shadow 0.3s var(--ease-out-expo),
-        background-position 0.5s ease,
-        border-color 0.3s ease;
+      /* Outer golden halo ring */
+      box-shadow:
+        0 0 0 1px rgba(212, 175, 55, 0.7),
+        0 0 0 3px rgba(30, 0, 10, 0.9),
+        0 0 0 5px rgba(212, 175, 55, 0.35),
+        0 12px 40px rgba(139, 0, 48, 0.5),
+        0 0 60px rgba(212, 175, 55, 0.15);
 
-      animation: premiumReveal 1.4s var(--ease-out-expo) both;
-      animation-delay: 0.85s;
+      transition:
+        transform 0.35s var(--ease-out-expo),
+        box-shadow 0.35s var(--ease-out-expo),
+        background-position 0.6s ease;
+
+      animation: premiumReveal 1.4s var(--ease-out-expo) both, royalBtnGlow 4s ease-in-out 1.5s infinite alternate;
+      animation-delay: 0.85s, 1.5s;
     }
 
-    /* Clean, crisp modern shimmer reflection */
+    @keyframes royalBtnGlow {
+      0%  { box-shadow: 0 0 0 1px rgba(212,175,55,0.6), 0 0 0 3px rgba(30,0,10,0.9), 0 0 0 5px rgba(212,175,55,0.25), 0 12px 40px rgba(139,0,48,0.4); }
+      100% { box-shadow: 0 0 0 1px rgba(255,248,212,0.9), 0 0 0 3px rgba(30,0,10,0.9), 0 0 0 5px rgba(212,175,55,0.6), 0 12px 50px rgba(232,24,94,0.7), 0 0 80px rgba(212,175,55,0.3); }
+    }
+
+    /* Shimmer sweep */
     #open-btn::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: -100%;
-      width: 50%;
+      top: 0; left: -100%;
+      width: 55%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-      transform: skewX(-25deg);
+      background: linear-gradient(90deg, transparent, rgba(255, 248, 212, 0.35), transparent);
+      transform: skewX(-22deg);
     }
 
     #open-btn:hover::before {
-      left: 150%;
-      transition: left 0.75s cubic-bezier(0.3, 1, 0.2, 1);
+      left: 160%;
+      transition: left 0.8s cubic-bezier(0.3, 1, 0.2, 1);
     }
 
     #open-btn:hover {
-      transform: translateY(-3px);
+      transform: translateY(-5px) scale(1.03);
       background-position: right center;
-      border-color: rgba(224, 191, 106, 0.6);
-      box-shadow: 0 15px 40px rgba(159, 18, 57, 0.45);
+      box-shadow:
+        0 0 0 1px rgba(255, 248, 212, 0.9),
+        0 0 0 3px rgba(30, 0, 10, 0.9),
+        0 0 0 5px rgba(212, 175, 55, 0.55),
+        0 20px 55px rgba(232, 24, 94, 0.7),
+        0 0 90px rgba(212, 175, 55, 0.35);
     }
 
     #open-btn:active {
-      transform: translateY(-1px) scale(0.98);
+      transform: translateY(-2px) scale(0.98);
     }
 
     /* Performance-Optimized Spatial Entrance Animation */
@@ -529,20 +572,25 @@
     /* Taller metallic ribbon bar — gold shimmer sweep + rose flash */
     .card-ribbon-bar {
       width: 100%;
-      height: 5px;
+      height: 7px;
       background: linear-gradient(90deg,
           transparent 0%,
-          rgba(201,162,39,0.4) 8%,
-          #c9a227 22%,
-          #fff8d4 38%,
+          rgba(212,175,55,0.3) 5%,
+          #d4af37 18%,
+          #fff8d4 32%,
+          #f0d060 44%,
           #e8185e 50%,
-          #fff8d4 62%,
-          #c9a227 78%,
-          rgba(201,162,39,0.4) 92%,
+          #f0d060 56%,
+          #fff8d4 68%,
+          #d4af37 82%,
+          rgba(212,175,55,0.3) 95%,
           transparent 100%);
       background-size: 300% 100%;
-      animation: shineBar 4s linear infinite;
-      box-shadow: 0 0 18px rgba(201, 162, 39, 0.6), 0 0 8px rgba(232, 24, 94, 0.4);
+      animation: shineBar 3.5s linear infinite;
+      box-shadow:
+        0 0 24px rgba(212, 175, 55, 0.75),
+        0 0 10px rgba(232, 24, 94, 0.5),
+        0 2px 8px rgba(0,0,0,0.4);
     }
 
     @keyframes shineBar {
@@ -553,35 +601,35 @@
     /* Premium Gold Corner Ornaments — glowing, animated */
     .card-corner {
       position: absolute;
-      width: 44px;
-      height: 44px;
+      width: 52px;
+      height: 52px;
       pointer-events: none;
-      border: 1.5px solid rgba(224, 191, 106, 0.7);
+      border: 2px solid rgba(212, 175, 55, 0.8);
       z-index: 2;
       transition: all 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-      animation: cornerPulse 4s ease-in-out infinite alternate;
+      animation: cornerPulse 3.5s ease-in-out infinite alternate;
     }
 
     @keyframes cornerPulse {
-      0%   { border-color: rgba(224, 191, 106, 0.5); filter: drop-shadow(0 0 3px rgba(224,191,106,0.2)); }
-      100% { border-color: rgba(255, 248, 212, 0.95); filter: drop-shadow(0 0 8px rgba(255,248,212,0.6)); }
+      0%   { border-color: rgba(212, 175, 55, 0.55); filter: drop-shadow(0 0 4px rgba(212,175,55,0.25)); }
+      100% { border-color: rgba(255, 248, 212, 1);   filter: drop-shadow(0 0 12px rgba(255,248,212,0.8)); }
     }
 
     .card-corner::before {
       content: '';
       position: absolute;
-      inset: 6px;
-      border: 1px solid rgba(232, 24, 94, 0.25);
+      inset: 7px;
+      border: 1px solid rgba(232, 24, 94, 0.3);
     }
 
     .card-corner::after {
       content: '';
       position: absolute;
-      width: 6px;
-      height: 6px;
-      background: radial-gradient(circle, #fff8d4, #c9a227);
+      width: 7px;
+      height: 7px;
+      background: radial-gradient(circle, #fff8d4, #d4af37);
       border-radius: 50%;
-      box-shadow: 0 0 8px rgba(201, 162, 39, 0.8);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 1), 0 0 4px rgba(255,255,255,0.6);
     }
 
     .card-corner--tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
@@ -669,10 +717,10 @@
 
     /* Animated shimmer gold title */
     .card-main-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.6rem, 5.8vw, 4rem);
+      font-family: 'Cinzel Decorative', 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
       font-weight: 900;
-      letter-spacing: 0.10em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -680,18 +728,18 @@
       /* Animating gold-to-rose shimmer */
       background: linear-gradient(90deg,
           #fff8d4 0%,
-          #e0bf6a 18%,
-          #ffffff 35%,
-          #ffd0a0 50%,
-          #ffffff 65%,
-          #e0bf6a 82%,
+          #f0d060 15%,
+          #ffffff 32%,
+          #ffd8a0 48%,
+          #ffffff 64%,
+          #f0d060 80%,
           #fff8d4 100%);
-      background-size: 250% auto;
+      background-size: 280% auto;
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.7));
-      animation: titleShimmer 5s linear infinite;
+      filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.8));
+      animation: titleShimmer 4.5s linear infinite;
     }
 
     @keyframes titleShimmer {
@@ -979,47 +1027,51 @@
       flex-wrap: wrap;
     }
 
-    /* Standard Royal Navigation Button (Velvet Crimson theme) */
+    /* Standard Royal Navigation Button */
     .nav-btn {
       position: relative;
-      padding: 0.75rem 2rem;
-      font-family: 'Lato', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
+      padding: 0.8rem 2.4rem;
+      font-family: 'Cinzel Decorative', 'Lato', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(255, 235, 242, 0.95);
-      background: linear-gradient(135deg, rgba(138, 6, 44, 0.4), rgba(60, 0, 15, 0.6));
-      border: 1px solid rgba(214, 18, 80, 0.5);
+      color: #f0d060;
+      background: linear-gradient(135deg, rgba(100, 5, 32, 0.5), rgba(45, 0, 15, 0.75));
+      border: 1px solid rgba(212, 175, 55, 0.5);
       border-radius: 999px;
       cursor: pointer;
       outline: none;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.8),
+        0 4px 18px rgba(0,0,0,0.5),
+        0 0 15px rgba(212,175,55,0.1);
+      transition: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    
+
     /* Shine effect for nav buttons */
     .nav-btn::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: -100%;
+      top: 0; left: -100%;
       width: 50%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 248, 212, 0.2), transparent);
       transform: skewX(-25deg);
       transition: left 0.5s ease;
     }
 
     .nav-btn:hover {
-      background: linear-gradient(135deg, rgba(214, 18, 80, 0.6), rgba(138, 6, 44, 0.8));
-      border-color: #e0bf6a;
-      color: #ffffff;
+      background: linear-gradient(135deg, rgba(180, 12, 60, 0.65), rgba(100, 5, 32, 0.85));
+      border-color: #f0d060;
+      color: #fff8d4;
       box-shadow:
-        0 8px 25px rgba(214, 18, 80, 0.5),
-        0 0 15px rgba(224, 191, 106, 0.3);
-      transform: translateY(-3px);
+        0 0 0 1px rgba(0,0,0,0.8),
+        0 8px 28px rgba(180, 12, 60, 0.55),
+        0 0 22px rgba(212, 175, 55, 0.4),
+        inset 0 1px 0 rgba(255,248,212,0.1);
+      transform: translateY(-4px);
     }
 
     .nav-btn:hover::before {
@@ -1028,22 +1080,6 @@
 
     .nav-btn:active {
       transform: translateY(0) scale(0.97);
-    }
-
-    /* Close Button variation (Champagne Gold theme) */
-    .nav-btn.close-btn {
-      background: linear-gradient(135deg, rgba(201, 162, 39, 0.15), rgba(80, 60, 10, 0.4));
-      border-color: rgba(224, 191, 106, 0.45);
-      color: #fff8d4;
-    }
-
-    .nav-btn.close-btn:hover {
-      background: linear-gradient(135deg, rgba(201, 162, 39, 0.3), rgba(150, 110, 20, 0.6));
-      border-color: #ffffff;
-      color: #ffffff;
-      box-shadow:
-        0 8px 25px rgba(201, 162, 39, 0.4),
-        0 0 20px rgba(255, 248, 212, 0.3);
     }
 
     /* ========================================
@@ -2265,16 +2301,19 @@
       position: fixed;
       inset: 0;
       z-index: 100;
-      background: rgba(12, 0, 7, 0.95);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
+      background:
+        radial-gradient(ellipse at 50% 35%, rgba(212, 175, 55, 0.14) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 70%, rgba(232, 24, 94, 0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at center, #140009 0%, #060003 100%);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.8s ease;
+      transition: opacity 1s ease;
     }
 
     #surprise-reveal.visible {
@@ -2283,14 +2322,16 @@
     }
 
     .surprise-teaser {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
       font-style: italic;
       color: var(--gold-light);
-      margin-bottom: 40px;
+      margin-bottom: 45px;
       opacity: 0;
       transform: translateY(20px);
-      transition: all 0.8s 0.4s ease;
+      transition: all 0.9s 0.4s ease;
+      text-shadow: 0 0 30px rgba(212,175,55,0.4), 0 0 60px rgba(212,175,55,0.2);
+      letter-spacing: 0.05em;
     }
 
     #surprise-reveal.visible .surprise-teaser {
@@ -2401,142 +2442,43 @@
 
     .s-particle {
       position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: floatUp 4.5s infinite linear;
+      opacity: 0;
+    }
+
+    /* Gold particles */
+    .s-particle:nth-child(odd) {
+      background: var(--gold);
+      box-shadow: 0 0 14px var(--gold), 0 0 6px rgba(255,248,212,0.6);
+    }
+
+    /* Rose particles */
+    .s-particle:nth-child(even) {
+      background: #e8185e;
+      box-shadow: 0 0 14px rgba(232,24,94,0.9), 0 0 6px rgba(255,180,200,0.5);
       width: 6px;
       height: 6px;
-      background: var(--gold);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--gold);
-      animation: floatUp 4s infinite linear;
-      opacity: 0;
     }
 
     @keyframes floatUp {
-      0% { transform: translateY(100vh) scale(0); opacity: 0; }
-      20% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
-    }
-    
-    .s-particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-    .s-particle:nth-child(2) { left: 30%; animation-delay: 2s; animation-duration: 5s; }
-    .s-particle:nth-child(3) { left: 50%; animation-delay: 1s; animation-duration: 3.5s; }
-    .s-particle:nth-child(4) { left: 70%; animation-delay: 3s; animation-duration: 4.5s; }
-    .s-particle:nth-child(5) { left: 90%; animation-delay: 0.5s; }
-    .s-particle:nth-child(6) { left: 20%; animation-delay: 1.5s; }
-    .s-particle:nth-child(7) { left: 60%; animation-delay: 2.5s; }
-    .s-particle:nth-child(8) { left: 80%; animation-delay: 0.8s; }
-
-    /* ============================================================
-       STATE 6 — VIDEO SURPRISE OVERLAY
-    ============================================================ */
-    #video-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.8s ease;
+      0%   { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
+      15%  { opacity: 1; }
+      85%  { opacity: 0.8; }
+      100% { transform: translateY(-120px) scale(1.8) rotate(180deg); opacity: 0; }
     }
 
-    .video-overlay-bg {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, rgba(30, 2, 12, 0.95), rgba(5, 0, 2, 0.99));
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-    }
+    .s-particle:nth-child(1) { left: 10%; animation-delay: 0s;    animation-duration: 4s; }
+    .s-particle:nth-child(2) { left: 25%; animation-delay: 1.8s;  animation-duration: 5.5s; }
+    .s-particle:nth-child(3) { left: 42%; animation-delay: 0.8s;  animation-duration: 3.8s; }
+    .s-particle:nth-child(4) { left: 58%; animation-delay: 2.5s;  animation-duration: 4.8s; }
+    .s-particle:nth-child(5) { left: 75%; animation-delay: 0.3s;  animation-duration: 4.2s; }
+    .s-particle:nth-child(6) { left: 18%; animation-delay: 3.2s;  animation-duration: 5s; }
+    .s-particle:nth-child(7) { left: 62%; animation-delay: 1.2s;  animation-duration: 3.5s; }
+    .s-particle:nth-child(8) { left: 88%; animation-delay: 2.1s;  animation-duration: 4.6s; }
 
-    #video-overlay.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .video-reveal-label {
-      position: relative;
-      font-family: 'Dancing Script', cursive;
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 35px;
-      
-      /* Glowing gradient text */
-      background: linear-gradient(90deg, #fff3c4 0%, #e0bf6a 30%, #ffffff 50%, #e0bf6a 70%, #fff3c4 100%);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: h2Shimmer 4s linear infinite;
-      filter: drop-shadow(0 0 15px rgba(201, 162, 39, 0.6));
-      
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 0.8s 0.5s ease;
-    }
-
-    #video-overlay.visible .video-reveal-label {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .video-frame-wrapper {
-      position: relative;
-      width: 90%;
-      max-width: 850px;
-      aspect-ratio: 16/9;
-      border-radius: 20px;
-      padding: 4px;
-      background: linear-gradient(135deg, rgba(201,162,39,0.9), rgba(232,24,94,0.5), rgba(201,162,39,0.9));
-      background-size: 200% 200%;
-      animation: videoFrameShine 6s linear infinite;
-      
-      box-shadow: 
-        0 30px 80px rgba(0, 0, 0, 0.95), 
-        0 0 60px rgba(232, 24, 94, 0.35),
-        0 0 30px rgba(201, 162, 39, 0.25);
-      opacity: 0;
-      transform: scale(0.95);
-      transition: all 0.8s 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    #video-overlay.visible .video-frame-wrapper {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    #surprise-video {
-      width: 100%;
-      height: 100%;
-      border-radius: 16px;
-      object-fit: contain;
-      background: #040002;
-    }
-
-    .video-close-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      z-index: 210;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .video-close-btn:hover {
-      background: var(--rose);
-      transform: scale(1.1) rotate(90deg);
-    }
 
 
     /* ============================================================
@@ -2546,7 +2488,10 @@
       position: fixed;
       inset: 0;
       z-index: 300;
-      background: radial-gradient(circle at center, #2b0010 0%, #0d0005 100%);
+      background:
+        radial-gradient(ellipse at 50% 20%, rgba(212,175,55,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 80%, rgba(232,24,94,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at center, #1e0010 0%, #080005 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2563,30 +2508,53 @@
     .wishes-card {
       position: relative;
       width: 90%;
-      max-width: 540px;
-      background: 
-        radial-gradient(ellipse at 50% 0%, rgba(232, 24, 94, 0.2) 0%, transparent 60%),
-        linear-gradient(170deg, rgba(38, 2, 15, 0.95) 0%, rgba(15, 0, 8, 0.98) 100%);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
+      max-width: 560px;
+
+      /* Layered velvet royal background */
+      background:
+        radial-gradient(ellipse at 50% -5%, rgba(212, 175, 55, 0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 105%, rgba(232, 24, 94, 0.14) 0%, transparent 40%),
+        linear-gradient(170deg, rgba(42, 3, 18, 0.97) 0%, rgba(12, 0, 7, 0.99) 100%);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+
+      /* Animated gold border */
       border: 2px solid transparent;
       background-clip: padding-box, border-box;
       background-origin: padding-box, border-box;
       background-image:
-        radial-gradient(ellipse at 50% 0%, rgba(232, 24, 94, 0.2) 0%, transparent 60%),
-        linear-gradient(170deg, rgba(38, 2, 15, 0.95), rgba(15, 0, 8, 0.98)),
-        linear-gradient(120deg, rgba(255, 248, 212, 0.7) 0%, rgba(232, 24, 94, 0.4) 50%, rgba(255, 248, 212, 0.7) 100%);
-      border-radius: 28px;
-      padding: 38px 36px 32px;
+        radial-gradient(ellipse at 50% -5%, rgba(212, 175, 55, 0.18) 0%, transparent 50%),
+        linear-gradient(170deg, rgba(42, 3, 18, 0.97), rgba(12, 0, 7, 0.99)),
+        linear-gradient(120deg,
+          rgba(255, 248, 212, 0.0) 0%,
+          rgba(255, 248, 212, 0.85) 20%,
+          rgba(212, 175, 55, 0.7) 38%,
+          rgba(232, 24, 94, 0.9) 50%,
+          rgba(212, 175, 55, 0.7) 62%,
+          rgba(255, 248, 212, 0.85) 80%,
+          rgba(255, 248, 212, 0.0) 100%);
+      background-size: auto, auto, 300% 300%;
+      animation: wishesBorderSweep 5s linear infinite;
+
+      border-radius: 32px;
+      padding: 44px 40px 38px;
       text-align: center;
       box-shadow:
-        0 50px 100px rgba(0, 0, 0, 0.85),
-        0 0 80px rgba(232, 24, 94, 0.25),
-        0 0 40px rgba(201, 162, 39, 0.15),
-        inset 0 1px 0 rgba(255, 248, 212, 0.15);
-      transform: translateY(30px) scale(0.95);
+        0 60px 120px rgba(0, 0, 0, 0.92),
+        0 0 100px rgba(232, 24, 94, 0.3),
+        0 0 60px rgba(212, 175, 55, 0.2),
+        0 0 30px rgba(232, 24, 94, 0.15),
+        inset 0 1px 0 rgba(255, 248, 212, 0.18),
+        inset 0 -1px 0 rgba(232, 24, 94, 0.1);
+      transform: translateY(40px) scale(0.93);
       opacity: 0;
-      transition: all 1.5s 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition: all 1.6s 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    @keyframes wishesBorderSweep {
+      0%   { background-position: auto, auto, 0% 50%; }
+      50%  { background-position: auto, auto, 100% 50%; }
+      100% { background-position: auto, auto, 0% 50%; }
     }
 
     #final-wishes.visible .wishes-card {
@@ -2595,27 +2563,43 @@
     }
 
     .wishes-crown {
-      font-size: 2.5rem;
-      margin-bottom: 6px;
-      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+      font-size: 3.2rem;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 0 16px rgba(212,175,55,0.8)) drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+      animation: crownFloat 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes crownFloat {
+      0%   { transform: translateY(0) scale(1); filter: drop-shadow(0 0 12px rgba(212,175,55,0.6)); }
+      100% { transform: translateY(-6px) scale(1.05); filter: drop-shadow(0 0 28px rgba(212,175,55,1)) drop-shadow(0 0 10px rgba(255,248,212,0.5)); }
     }
 
     .wishes-pre {
-      font-family: 'Lato', sans-serif;
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.7);
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      margin-bottom: 6px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: rgba(240, 208, 96, 0.8);
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
     }
 
     .wishes-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      line-height: 1.1;
-      color: var(--gold-light);
-      margin-bottom: 10px;
-      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      font-family: 'Cinzel Decorative', 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+
+      background: linear-gradient(90deg,
+        #fff8d4 0%, #f0d060 18%, #ffffff 35%,
+        #d4af37 50%, #ffffff 65%, #f0d060 82%, #fff8d4 100%);
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleShimmer 5s linear infinite;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+      margin-bottom: 12px;
     }
 
     .wishes-divider {
