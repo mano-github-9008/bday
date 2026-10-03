@@ -2777,6 +2777,7 @@
   position: relative;
   min-height: 220px;
   overflow: hidden;
+  text-align: left;
 }
 
 /* Base page state - hidden by default */
