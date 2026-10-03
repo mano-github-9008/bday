@@ -1290,8 +1290,26 @@
 
     <button id="surprise-btn" aria-label="Open your birthday surprise">
       <span class="surprise-ring"></span>
-      
-      <span class="surprise-label">Read Only if you really want to !</span>
+      <svg class="surprise-gift-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="24" width="48" height="36" rx="4" fill="url(#giftGrad)" opacity="0.95"/>
+        <rect x="4" y="17" width="56" height="11" rx="3" fill="url(#ribbonGrad)"/>
+        <line x1="32" y1="17" x2="32" y2="60" stroke="#fff8d4" stroke-width="2.5" opacity="0.55"/>
+        <path d="M32 18 C32 18 22 12 20 7 C18 2 25 0 29 5 C31 8 32 14 32 18Z" fill="#c9a227"/>
+        <path d="M32 18 C32 18 42 12 44 7 C46 2 39 0 35 5 C33 8 32 14 32 18Z" fill="#e8185e"/>
+        <circle cx="32" cy="15" r="4.5" fill="#fff8d4"/>
+        <defs>
+          <linearGradient id="giftGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7a0028"/>
+            <stop offset="100%" stop-color="#3d0014"/>
+          </linearGradient>
+          <linearGradient id="ribbonGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#c9a227"/>
+            <stop offset="50%" stop-color="#fff8d4"/>
+            <stop offset="100%" stop-color="#c9a227"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="surprise-label">Open Your Surprise</span>
     </button>
   </div><!-- /surprise-reveal -->
 
@@ -1316,55 +1334,521 @@
     </div>
 
     <div class="wishes-card">
-      <!-- Close button -->
-      <button class="wishes-close-btn" id="wishes-close-btn" aria-label="Close final message">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+  <!-- Close button -->
+  <button class="wishes-close-btn" id="wishes-close-btn" aria-label="Close final message">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
 
-      <div class="wishes-ribbon"></div>
+  <div class="wishes-ribbon"></div>
 
-      <div class="wishes-body">
-        <div class="wishes-crown" aria-hidden="true">👑</div>
+  <div class="wishes-body">
+    <div class="wishes-crown" aria-hidden="true">👑</div>
 
-        <p class="wishes-pre">With all my love,</p>
-        <h2 class="wishes-name">Happy Birthday<br/>Achu</h2>
+    <p class="wishes-pre">With all my love,</p>
+    <h2 class="wishes-name">Happy Birthday<br/>Achu</h2>
 
-        <div class="wishes-divider">
-          <span class="wishes-line"></span>
-          <svg width="18" height="16" viewBox="0 0 24 22">
-            <path d="M12 20C12 20 2 13 2 7C2 4.2 4.2 2 7 2C9 2 11 3 12 5C13 3 15 2 17 2C19.8 2 22 4.2 22 7C22 13 12 20 12 20Z" fill="url(#wg)"/>
-            <defs>
-              <radialGradient id="wg" cx="35%" cy="30%" r="65%">
-                <stop offset="0%" stop-color="#fff8d4"/>
-                <stop offset="50%" stop-color="#c9a227"/>
-                <stop offset="100%" stop-color="#7a5f00"/>
-              </radialGradient>
-            </defs>
-          </svg>
-          <span class="wishes-line"></span>
-        </div>
+    <div class="wishes-divider">
+      <span class="wishes-line"></span>
+      <svg width="18" height="16" viewBox="0 0 24 22">
+        <path d="M12 20C12 20 2 13 2 7C2 4.2 4.2 2 7 2C9 2 11 3 12 5C13 3 15 2 17 2C19.8 2 22 4.2 22 7C22 13 12 20 12 20Z" fill="url(#wg)"/>
+        <defs>
+          <radialGradient id="wg" cx="35%" cy="30%" r="65%">
+            <stop offset="0%" stop-color="#fff8d4"/>
+            <stop offset="50%" stop-color="#c9a227"/>
+            <stop offset="100%" stop-color="#7a5f00"/>
+          </radialGradient>
+        </defs>
+      </svg>
+      <span class="wishes-line"></span>
+    </div>
 
-        <p class="wishes-msg">
-          May every single day of your life shine as brightly as your smile.
-          May your heart always overflow with joy, your dreams always find wings,
-          and may you forever be wrapped in love as deep and endless as mine for you.
-        </p>
 
-        <p class="wishes-closing">
+<div id="wishes-pages-container">
+
+  <!-- Page 1 -->
+  <div class="wishes-page active">
+    <p class="wishes-msg">
+      May every single day of your life shine as brightly as your smile.
+      <br>
+      May your heart always overflow with joy, your dreams always find wings,
+      <br>
+      and may you forever be wrapped in love as deep and endless as mine for you.
+      <br>
+      Sach bolu toh ye wish karne se pehle bhi bohot baar socha… karu ya nahi karu.
+      <br>
+      Kyunki mujhe nahi pata mere koi bhi baat aapko aapke past ko yaad dilatha hai...
+      <br>
+      Isliye agar mere ye wish aapko thodi bhi buri lage, toh please bura mat maanna.
+      <br>
+      Mera intention kabhi bhi aapko disturb karna nahi hai.
+    </p>
+  </div>
+
+  <!-- Page 2 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Achu aapko patah hai kya, ki mujhe aap kitni pasand ho, iska koi proper number, limit ya explanation mere paas nahi hai.
+      <br>
+      Bas itna jaanta hu ki aap mujhe bohot pasand ho.
+      <br>
+      Itni zyada ki aapkeliye kuch bhi karu chahe woh mere jaan dena pade woh bhi kyu na ho...
+      <br>
+      Maine kabhi imagine nahi kiya tha ki aap mujhse baat karoge humari baat hogi, hum itne close honge, itni memories banengi.
+      <br>
+      But actually me bhot lucky hu ishliye aap jaise ek person mere life me aaye
+      <br>
+      You are the gift god to me achu...
+      <br>
+      Aap mere pehli smile ho
+    </p>
+  </div>
+
+  <!-- Page 3 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Aap mere woh sach ho jo mein explain nahi kar paunga.
+      <br>
+      Aur pata nahi kab, kaise… aap mere har chotti badi khushi ka ek hissa ban gaye.
+      <br>
+      kuch bolke aapko yadh nahi dhilana aur aap woh sunna bhi nhi chathe ye bhi me jantha hu...
+      <br>
+      Par i loved you truely from my heart chahe aap kaise bhi kyu na ho...
+      <br>
+      Me bhot jagda kartha hu aapse lekin woh bhi kuch aur vajase nhi apni har jagda sirf ishliye hua ki aap sirf mere ho aapka har haq sirf mujhpe hona chaiye...
+      <br>
+      ithna jo pasandh kartha hu achu...
+      <br>
+      Aapki innocence.
+      <br>
+      Aapka childish hona.
+    </p>
+  </div>
+
+  <!-- Page 4 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Aapka bina soche masti karna.
+      <br>
+      Jo mann mein aaye woh karna.
+      <br>
+      Aapka apne hi tareeke se rehna.
+      <br>
+      Ye sab mujhe aap mein sabse zyada pasand tha.
+      <br>
+      Aur sach kahu, aap kal badal bhi jao na, tab bhi mujhe aap pasand rahogi.
+      <br>
+      Aap jaisi ho, waisi.
+      <br>
+      Bohot kuch bolneka man kar raha hai, lekin aaj ke dhin kuch bol nhi paunga...
+      <br>
+      ishliye aapke kuch questions jo aap mujhse hamesha puchthe ho ushka answer bola hu...
+      <br>
+      aur kuch advices jo aapko kuch samjhayega...!
+      <br>
+      Aapko lagtha hai na me kuch notice nhi kartha ?
+    </p>
+  </div>
+
+  <!-- Page 5 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Par me aapke chotte chotte efforts bhi maine notice kiye the, Achu.
+      <br>
+      Haan, aapne sahi suna…
+      <br>
+      Maine notice kiya tha.
+      <br>
+      Mereliye aap kya kuch nhi kiye, mereliye ready hothe the, mereliye adjust karthe the, mujhe jo man hai wohi karthe ho aise bolthe jaa saktha hu...
+      <br>
+      har chotti si chotti efforts bhi notice kiya hu
+      <br>
+      Bas main har cheez dikhata nahi tha.
+      <br>
+      Shayad mere sabse badi galti wahi thi.
+      <br>
+      Main andar se bohot kuch feel karta tha, lekin bahar se shayad utna dikha nahi paaya.
+    </p>
+  </div>
+
+  <!-- Page 6 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Aur isi wajah se shayad aapko kabhi laga ho ki main utna care nahi karta tha, ya aap mere liye utni important nahi thi.
+      <br>
+      Lekin sach iska bilkul opposite tha.
+      <br>
+      Aap mere nazar ke saamne jitni thi, usse kahin zyada mere soch aur mere zindagi ke andar thi.
+      <br>
+      Aap kabhi busy hojathe ho kabhi aapke frnds se milne ya unke saath bahar jana ho, kabhi kaka ke ghar toh kabhi mummy ke saath bahar
+      <br>
+      Lekin aapki har absence mujhe bohot sathathi hai, ush time me bhi aapke photo ke saath baat kartha hu, apka drawing kartha hu, aapke saath ka life imagine kartha hu, aapkeliye wait kartha rehtha hu achu...
+    </p>
+  </div>
+
+  <!-- Page 7 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Aapko shayad pata bhi nahi hoga ki maine kitne sapne dekhe the.
+      <br>
+      Aapko khush rakhne ke.
+      <br>
+      Aapki chhoti chhoti wishes yaad rakhne ke.
+      <br>
+      Aapko jis tarah rehna hai, us tarah accept karne ke.
+      <br>
+      Aap jo bolo woh karne ke.
+      <br>
+      Apne haathon se aapko khana khilane ke.
+      <br>
+      Aapke saath normal si zindagi jeene ke.
+      <br>
+      isshe zyadha kuch nhi
+      <br>
+      Bas aapke saath ek aisi life jahan ghar lautne ka matlab aapke paas lautna ho.
+    </p>
+  </div>
+
+  <!-- Page 8 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      aisa ek dhin nhi hai achu me aapka photo dheke bina soya hu naahi dheke bina utta hu
+      <br>
+      aapse baat nhi karunga toh bhot dhuktha hai achu...
+      <br>
+      Aapko ek baat aur clear karna chahta hu.
+      <br>
+      Agar kabhi mere kisi baat, kisi action, mere silence, ya mere behaviour se aapko laga ho ki me bs aise hi love hai bol raha hu fake hu laga toh waise bilkul bhi nhi hai puttu... trust me
+      <br>
+      Main perfect nahi tha pr aapko jaisa chaiye waise rena chatha tha.
+      <br>
+      Maine mistakes ki hongi pr intentionally nhi ma.
+      <br>
+      bohot kuch sahi tarike se express nahi kiya pr aisa nhi ki mujhe kuch farak nhi padtha.
+    </p>
+  </div>
+
+  <!-- Page 9 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      kabhi aapko confuse kiya hu lekin achu woh jo bhi jagda mera change hona sirf ishliye ki aap mujhe attention deh.
+      <br>
+      Aap mere liye kabhi timepass nahi thi.
+      <br>
+      Kabhi bhi nahi.
+      <br>
+      Aapko kabhi aankh, dil aur throat ek saath heavy hua hai?
+      <br>
+      Mujhe hua hai.
+      <br>
+      Roj hua hai.
+      <br>
+      Naahi hi achase sone ho raha hai, naahi khane... har dhin bhot heavy feel hotha hai man kartha hai mar jau, aapke bine ye life ithna easy nhi hai achu...
+      <br>
+      Aapke jaane ke baad ithna struggle kar raha hu kaise bolu, naa bolna hi acha hai
+    </p>
+  </div>
+
+  <!-- Page 10 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Aisa ek jagah nhi hai, har jagah sirf aapki yadh atha hai achu...
+      <br>
+      ek pagal ki jaise aapko khoke har jagah dhud raha hu...
+      <br>
+      College ki galiyon mein.
+      <br>
+      Tea shop mein.
+      <br>
+      Dadar mein.
+      <br>
+      Mandir mein.
+      <br>
+      Un jagahon par jahan hum kabhi saath the.
+      <br>
+      Ek pagal ki tarah. aankho me aasu ke saath aaj thak miss kar raha hu dhuktha hai bhot ma... kaise bolu
+    </p>
+  </div>
+
+  <!-- Page 11 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      aap itni pasand ho ki aisa feel kartha hu aap mere andar se aansu banke bahar aa rahi ho.
+      <br>
+      Puchthe ho na me baat karungi toh hi karega kya krke...
+      <br>
+      Aisa nhi hai achu naahi mujhe ego hai naahi aap phele mssg karo krke expectations hai...
+      <br>
+      Bs aapke jaise me normal dhek nhi paraha hu puttu aapke chodke jana mereliye chotti baat nhi thi...
+      <br>
+      bs ithna soctha hu ki aapko force nhi karna aapko baat karneka man ho toh aap karoge thabh karlunga aaj thak tharas raha hu achu aapse baat karne
+    </p>
+  </div>
+
+  <!-- Page 12 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      ush dhin block karunga krke ishliye nhi bola ki mujhe jhana hai bs aapke mu se ek bhar sunna tha achu, math jaa mano... bs ithna hi sunna tha achu
+      <br>
+      mujhe aap aapke frnds ke saath time nikal rahe ho ushme problem bilkul bhi nhi hai, kabhi tha bhi nhi even ishke phele jabh hum saath the thabhi bhi aapke frnds ke saath gaye the me kabhi kuch bola nhi hu, ush dhin bs ithna janna tha ki unlog se me kithna important hu....
+      <br>
+      patah nhi aap kya samjhe woh time pe, lekin aap hi bole the achu ki aapke frnds change hogaye aapko sirf me matter kartha hu koi rehga ya na rehga toh last thak me aapkeliye rahu toh kaafi hai bole,
+    </p>
+  </div>
+
+  <!-- Page 13 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      pr me kaise bhul paunga ki jhab apne jagda hua tha thab wohi manisha apne frnds ke saath the mere saath nhi.
+      <br>
+      jhab aap mujhse thoda bhi baat krne nhi dhethe the aapko yadh ho toh ithna hi puchne dhethe ho ki mandhir se ghar aaye kya safely poche na?
+      <br>
+      aur woh time pe phele marines gaye aapke frnds ke saath fir Rudra ke birthday celebrate karne gaye ithna kya periods tha fir bhi gaye...
+      <br>
+      aur Alle apke saath me baithke photo nikala even ushke phele beach gaye the thabhi bhi aapke paas hi baitha tha ye sabh dhek ke mujhe hurt hua....
+    </p>
+  </div>
+
+  <!-- Page 14 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      bol sakthe ho aisa kuch nhi hai pr woh time pe woh halath pe yehi me mere female frnd ke saath hotha toh aapko kaise lagtha socho, bale woh ithni badi baath nah ho ya jaise dhik raha hai waise nhi..
+      <br>
+      even phele bhi alle ye sab kiya hoga kyu kabhi siddhivinayak mandhir bhi aapke saath retha hai...
+      <br>
+      woh time me kuch bola hu kya aapko kyuki mujhe normal laga aap saath the mere...
+      <br>
+      pr aapke janeke baadh me alag feel kar raha hu patah nhi kyu pr mere feelings samjhoge toh samjhega ki me kya feel kartha hu...
+      <br>
+      me aapko kabhi block nhi kar paunga achu mujhse nhi hoga...
+      <br>
+      Wait kartha raha kabhi toh aap baath karoge krke pr ithne dhin hogaye aapko meri yadh thak nhi aaya... koi baath nhi
+    </p>
+  </div>
+
+  <!-- Page 15 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Aapko me bhot hurt kiya hu achu, pr usshe jyadha love kiye hu ye kithna ye sach hai woh aapko kaise treat kiya hu wohi bathayega...
+      <br>
+      Mujhse jo bhi hua, maine sab kiya… sirf isliye kyunki main aapko khona nahi chahta tha.
+      <br>
+      Aapko apni life mein rakhne ke liye jitna kar sakta tha, maine utna kiya. Apni mummy aur behen se jagda kiya,
+      <br>
+      apne friends se baat tak karna band kar diya… jo jo nhi sunna tha sab aapke mu se suna,.. aur aapke liye bahut roya bhi.
+      <br>
+      Shayad aapko kabhi samajh na aaye ki maine andar se kitna kuch saha hai, lekin maine kabhi iska hisaab nahi rakha…
+    </p>
+  </div>
+
+  <!-- Page 16 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      kyunki mere liye aap important the aur me wait kartha raha kabhi toh aapko samjhega kabhi toh aap mere paas aaoge....
+      <br>
+      Kabhi soche ho kya, mujhe sirf aap hi kyun chahiye?
+      <br>
+      Sirf isliye kyunki aap sundar dikhti ho?
+      <br>
+      Aapki qualities ki wajah se?
+      <br>
+      Ya phir sirf intimacy ke liye?
+      <br>
+      Nahi, Achu… ye sab mujhe kisi aur mein bhi mil sakta hai.
+      <br>
+      Mujhse zyada sundar koi ladki mil sakti hai, lekin woh aap nahi ho sakti.
+      <br>
+      Duniya mein 1000 Manisha ho sakti hai, lekin unmein se koi bhi meri Achu nahi ban sakti.
+    </p>
+  </div>
+
+  <!-- Page 17 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Looks waqt ke saath badal jaate hai.
+      <br>
+      Qualities bhi waqt aur situations ke saath badal sakti hai.
+      <br>
+      Aur intimacy ki khushi… shayad kuch minutes ki hoti hai.
+      <br>
+      Lekin maine aapko un kuch minutes ke liye nahi chuna, Achu…
+      <br>
+      maine aapko apni poori zindagi ke liye choose kiya hai. ye
+      <br>
+      Mujhe aapke andar sirf ek beautiful person nahi dikhta…
+      <br>
+      mujhe woh insaan dikhta hai jiske saath main apni life ke ache aur bure, easy ya difficult, har phase ko jeena chahta hoon.
+      <br>
+      face me wrinkles aajaye woh umar me bhi.. aise hi love karna chatha hu meri aakri saas thak
+    </p>
+  </div>
+
+  <!-- Page 18 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Isliye nahi ki duniya mein aap jaisi koi aur nahi milegi…
+      <br>
+      balki isliye ki aapki jagah meri life mein koi aur le hi nahi sakta.
+      <br>
+      Love aur married life same nahi hoti hai, Ma.
+      <br>
+      agar koi bole ki love life me jagda bilkul nhi hoga bhot smooth hoga toh aise real me nhi hotha reality ek dham alag hai..,
+      <br>
+      har time jagda karne ka mathlab ye bhi nhi hai ki hamesha waise hi hothe rahega, bs ek bhar sochke ki woh jagda kyu aur kis wajase ho raha hai
+      <br>
+      Kabhi kabhi humein lagta hai ki aaj sab kuch aisa hai, toh kal bhi aisa hi rahega…
+      <br>
+      lekin sach hamesha aisa nahi hota.
+    </p>
+  </div>
+
+  <!-- Page 19 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Love life mein hum ek doosre se bahut kuch seekhte hain. Jo misunderstandings hoti hain, unhe samajhne ki koshish karte hain, solve karte hain aur ye seekhte hain ki wahi galti dobara nahi honi chahiye.
+      <br>
+      Love ek chidiya ke ghosle jaisa hota hai, Ma…
+      <br>
+      jaise ek ek tinka jod kar ghosla dheere dheere banta hai, waise hi relationship mein bhi trust, understanding aur love waqt ke saath dheere dheere badhte hain.
+      <br>
+      Har problem ke baad agar hum ek doosre ko aur achhe se samajhne lagen, toh relationship waqt ke saath aur mature hota jaata hai.
+    </p>
+  </div>
+
+  <!-- Page 20 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Aur ek waqt ke baad aisa relationship ban jaata hai jahan sirf pyaar nahi, balki ek gehri understanding aur trust hota hai…
+      <br>
+      itna strong ki koi bhi teesra insaan aasani se uske beech jagah nahi bana sakta.
+      <br>
+      me jagda jarur kartha hu lekin thuranth aapke paas bhi atha hu ma...
+      <br>
+      aapse baat kare bina ithne dhin bhot difficult tha face karne aur aage abhi ithna easy nhi hoga mereliye...
+      <br>
+      patah nhi ye pura padhe honge ya nhi, kyu ki meri puri feelings ko ek book me dhiya tha wohi nhi padhe,
+      <br>
+      Lekin iska matlab ye nahi ki main aapki life ko rokna chahta hu.
+      <br>
+      Bilkul nahi.
+    </p>
+  </div>
+
+  <!-- Page 21 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Aapko apni life jeeni hai.
+      <br>
+      Apne dreams poore karne hai.
+      <br>
+      Aage badhna hai.
+      <br>
+      Mujhe nahi pata mere ye baat aapke dil tak kitni pahunchengi.
+      <br>
+      Mujhe ye bhi nahi pata aap abhi mujhe kis nazar se dekhti ho.
+      <br>
+      Aur main aapse koi answer, koi explanation, koi promise nahi maang raha.
+      <br>
+      Bas chahta hu ki aaj birthday wish ke saath misunderstanding bhi clear ho jaaye
+      <br>
+      Main aapse kabhi nafrat nahi kar saka.
+      <br>
+      Aur jo kuch bhi feel kiya, woh dil se kiya.
+    </p>
+  </div>
+
+  <!-- Page 22 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Aap mere life mein kitne time ke liye thi, ye mere haath mein nahi tha.
+      <br>
+      Lekin aapne mere andar jo jagah banayi…
+      <br>
+      woh hamesha keliye waise hi rehga
+      <br>
+      Aapke birthday keliye ek saal se plan kiya tha aapko bhot surprise karne, love kaise hotha hai woh feel karwana chatha tha, aapko milne ane wala tha pr situation... ishliye socha
+      <br>
+      Bs jane se phele ek bhar aapko one last time wish karna chatha tha, kuch bhi aapke dhil ko hurt kiya ho toh maaf karna
+      <br>
+      Mujhe woh bagya nhi hai ki aapko pahu...
+      <br>
+      pr abhi aur hamesha
+      <br>
+      dhil se bas ithna chatha hu
+      <br>
+      Aap khush raho, Achu.
+    </p>
+  </div>
+
+  <!-- Page 23 -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      Jahan raho, jaise raho…
+      <br>
+      Bas khush raho.
+      <br>
+      Aur haan…
+      <br>
+      mujhe nhi patah ki abhi me aapko kya lagtha hu lekin aapko sach me meri jarurath padi toh thabi aapke samne aaunga..
+      <br>
+      ya fir aap chathe ho ki me aapke life me nah rahu woh bhi me accept kartha hu i promise you on your birthday..
+      <br>
+      pr maana sirf jane keliye aapki yaadh bhulne keliye nhi...
+      <br>
+      abhi saari emotional baatein side mein rakh kar ek baar genuinely smile karna.
+      <br>
+      Kyuki aapki smile dekh kar khush hone wala ek insaan kabhi tha…
+      <br>
+      Aur woh insaan aaj bhi aapki khushi ke liye pray karta hai.
+      <br>
+      Happy Birthday, Achu.
+      <br>
+      Apna bohot saara dhyan rakhna.
+      <br>
+      Aur thank you…
+    </p>
+  </div>
+
+  <!-- Page 24 (Final Page) -->
+  <div class="wishes-page">
+    <p class="wishes-msg">
+      mere life ke un khoobsurat moments ka hissa banne ke liye, jinhe main chaah kar bhi kabhi bhool nahi paunga.
+      <br>
+      Kisi aur ke saath banne wali life se acha aapke nah rhene wali ye hurt hi mujhe bhot pasandh hai...
+      <br>
+      jaise har tuesday aapko yadh rakhne wali fasting, waise hi mujhe jithna hurt hoga uthna jyadha love karunga thaki aur hurt hu aur fir aur jyadha love karu
+      <br>
+      yehi kartha rahunga meri aakhri saas thak....
+      <br>
+      Bye, Achu.
+      Bs Khush rehna. Hamesha. yehi mere sabse badi wish hai...
+    </p>
+
+    <p class="wishes-closing">
           You are my favourite person in the entire universe —
           today, tomorrow, always.
           <em>You are loved beyond every word I know.</em>
         </p>
-
         <p class="wishes-signature">— Yavagalu Ninnavane ❤️</p>
-      </div>
+  </div>
 
-      <div class="wishes-ribbon"></div>
-    </div><!-- /wishes-card -->
-  </div><!-- /final-wishes -->
+</div>
+
+
+
+    <div class="nav-section" style="margin-top: 1rem;">
+      <div class="page-dots" id="wishes-dots"></div>
+      <div class="nav-buttons">
+        <button class="nav-btn" id="wishes-prev-btn" aria-label="Previous wish">Prev</button>
+        <button class="nav-btn" id="wishes-next-btn" aria-label="Next wish">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wishes-ribbon"></div>
+</div><!-- /wishes-card -->
 
   <script src="script.js" defer></script>
 </body>
