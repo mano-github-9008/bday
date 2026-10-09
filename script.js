@@ -250,7 +250,7 @@ function updateNavBtns() {
   if (prevBtn) prevBtn.style.opacity = currentPage === 0 ? '0.3' : '1';
   if (nextBtn) {
     nextBtn.style.opacity = '1';
-    nextBtn.innerText = currentPage === totalPages - 1 ? 'Finish' : 'Next';
+    nextBtn.innerText = currentPage === totalPages - 1 ? 'Next' : 'Next';
   }
 }
 updateNavBtns();
