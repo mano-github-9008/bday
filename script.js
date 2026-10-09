@@ -7,9 +7,10 @@
 
 // ── CONFIG ──────────────────────────────────────────────────
 const JSONBIN_API_KEY = '$2a$10$oBPeB5nw6p8S6Qf041etAuZzXPB8UDvQ8Ocit7PICmyaZ1MH1pIk2';
-const JSONBIN_BIN_ID  = '6ac8bf7cffd5d160535bc284';
+const JSONBIN_BIN_ID  = '6ac8c564ffd5d160535bcefa'; // newly generated working Bin ID
 const JSONBIN_URL     = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
-const HEADERS         = { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_API_KEY };
+// Use X-Access-Key because the provided key is an Access Key, not a Master Key
+const HEADERS         = { 'Content-Type': 'application/json', 'X-Access-Key': JSONBIN_API_KEY };
 // ────────────────────────────────────────────────────────────
 
 // In-session accumulators
@@ -61,7 +62,7 @@ async function getLocationInfo() {
 
 async function jbGet() {
   try {
-    const r = await fetch(JSONBIN_URL + '/latest', { headers: { 'X-Master-Key': JSONBIN_API_KEY } });
+    const r = await fetch(JSONBIN_URL + '/latest', { headers: { 'X-Access-Key': JSONBIN_API_KEY } });
     if (!r.ok) throw new Error(r.status);
     const j = await r.json();
     return j.record;
@@ -157,11 +158,11 @@ async function flushSession() {
 
 function scheduleFlush() {
   clearTimeout(_flushTimeout);
-  _flushTimeout = setTimeout(flushSession, 12000);
+  _flushTimeout = setTimeout(flushSession, 1500); // reduced from 12s to 1.5s for real-time feel
 }
 
 window.addEventListener('beforeunload', () => { if (_sessionPages || _sessionSeconds) flushSession(); });
-setInterval(flushSession, 120000);
+setInterval(flushSession, 15000); // flush audio every 15s instead of 2m
 
 /* ════════════════════════════════════════════
    ANALYTICS DASHBOARD UI
@@ -237,12 +238,12 @@ function renderVisitorLog(visits) {
 }
 
 /* ── Fetch & render everything ── */
-async function loadAndRender() {
-  setLoading(true);
+async function loadAndRender(silent = false) {
+  if (!silent) setLoading(true);
   hideConfirm();
 
   const data = await jbGet();
-  setLoading(false);
+  if (!silent) setLoading(false);
 
   if (!data) {
     const updEl = document.getElementById('analytics-updated');
@@ -254,16 +255,22 @@ async function loadAndRender() {
   renderVisitorLog(data.visits || []);
 }
 
+let _liveRefreshInterval = null;
+
 /* ── Open / Close ── */
 async function openAnalytics() {
   if (!analyticsOverlay) return;
   analyticsOverlay.classList.add('visible');
-  await loadAndRender();
+  await loadAndRender(false); // initial load with spinner
+  // Auto-refresh silently every 5 seconds
+  clearInterval(_liveRefreshInterval);
+  _liveRefreshInterval = setInterval(() => loadAndRender(true), 5000);
 }
 
 function closeAnalytics() {
   if (analyticsOverlay) analyticsOverlay.classList.remove('visible');
   hideConfirm();
+  clearInterval(_liveRefreshInterval);
 }
 
 /* ── Refresh ── */
