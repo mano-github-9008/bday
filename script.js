@@ -1,8 +1,315 @@
 'use strict';
 
 /* ============================================================
+   ANALYTICS — JSONBin Integration
+   Tracks: views, pages read, minutes listened, visitor details
+============================================================ */
+
+// ── CONFIG ──────────────────────────────────────────────────
+const JSONBIN_API_KEY = '$2a$10$oBPeB5nw6p8S6Qf041etAuZzXPB8UDvQ8Ocit7PICmyaZ1MH1pIk2';
+const JSONBIN_BIN_ID  = '6ac8bf7cffd5d160535bc284';
+const JSONBIN_URL     = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+const HEADERS         = { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_API_KEY };
+// ────────────────────────────────────────────────────────────
+
+// In-session accumulators
+let _sessionPages   = 0;
+let _sessionSeconds = 0;
+let _flushTimeout   = null;
+let _isFlushing     = false;
+
+/* ── HELPERS ── */
+
+/** Detect browser, OS, device from userAgent */
+function getClientInfo() {
+  const ua = navigator.userAgent;
+  let browser = 'Unknown', os = 'Unknown', device = 'Desktop';
+
+  if      (/Edg\//.test(ua))       browser = 'Edge';
+  else if (/OPR\/|Opera/.test(ua)) browser = 'Opera';
+  else if (/Firefox\//.test(ua))   browser = 'Firefox';
+  else if (/Chrome\//.test(ua))    browser = 'Chrome';
+  else if (/Safari\//.test(ua))    browser = 'Safari';
+
+  if      (/Windows NT/.test(ua))        os = 'Windows';
+  else if (/Android/.test(ua))           os = 'Android';
+  else if (/iPhone|iPad|iPod/.test(ua))  os = 'iOS';
+  else if (/Mac OS X/.test(ua))          os = 'macOS';
+  else if (/Linux/.test(ua))             os = 'Linux';
+
+  if (/iPad/.test(ua))                           device = 'Tablet';
+  else if (/Mobi|Android|iPhone/.test(ua))       device = 'Mobile';
+
+  return { browser, os, device };
+}
+
+/** Fetch IP / city / country from free ipapi.co */
+async function getLocationInfo() {
+  try {
+    const r = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
+    if (!r.ok) throw new Error();
+    const d = await r.json();
+    // anonymise last octet of IP
+    const ip = (d.ip || '').replace(/\.\d+$/, '.×');
+    return { ip, country: d.country_name || '—', city: d.city || '—', flag: d.country_code ? d.country_code.toLowerCase() : '' };
+  } catch {
+    return { ip: '—', country: '—', city: '—', flag: '' };
+  }
+}
+
+/* ── JSONBin READ / WRITE ── */
+
+async function jbGet() {
+  try {
+    const r = await fetch(JSONBIN_URL + '/latest', { headers: { 'X-Master-Key': JSONBIN_API_KEY } });
+    if (!r.ok) throw new Error(r.status);
+    const j = await r.json();
+    return j.record;
+  } catch (e) {
+    console.warn('[Analytics] fetch failed:', e);
+    return null;
+  }
+}
+
+async function jbPut(data) {
+  try {
+    const r = await fetch(JSONBIN_URL, { method: 'PUT', headers: HEADERS, body: JSON.stringify(data) });
+    if (!r.ok) throw new Error(r.status);
+    return true;
+  } catch (e) {
+    console.warn('[Analytics] write failed:', e);
+    return false;
+  }
+}
+
+/* ── RECORD PAGE VIEW WITH USER DETAILS ── */
+(async function recordVisit() {
+  await new Promise(res => setTimeout(res, 1500)); // wait for page to settle
+
+  const current = await jbGet();
+  if (!current) return;
+
+  const { browser, os, device } = getClientInfo();
+  const { ip, country, city, flag } = await getLocationInfo();
+
+  const visit = {
+    t:  new Date().toISOString(),   // timestamp
+    b:  browser,
+    o:  os,
+    d:  device,
+    c:  country,
+    ci: city,
+    fl: flag,
+    ip: ip
+  };
+
+  const visits = Array.isArray(current.visits) ? current.visits : [];
+  visits.unshift(visit);           // newest first
+  if (visits.length > 50) visits.length = 50; // keep last 50
+
+  await jbPut({
+    views:           (current.views || 0) + 1,
+    pagesRead:       current.pagesRead || 0,
+    minutesListened: current.minutesListened || 0,
+    lastUpdated:     visit.t,
+    visits
+  });
+})();
+
+/* ── TRACK POEM PAGES READ ── */
+function trackPageRead() {
+  _sessionPages += 1;
+  scheduleFlush();
+}
+
+/* ── TRACK AUDIO / VIDEO LISTEN TIME ── */
+function attachAudioTrackers() {
+  document.querySelectorAll('audio').forEach(el => {
+    el.addEventListener('timeupdate', () => { if (!el.paused) _sessionSeconds += 0.25; });
+  });
+  const vid = document.getElementById('special-song');
+  if (vid) vid.addEventListener('timeupdate', () => { if (!vid.paused) _sessionSeconds += 0.25; });
+}
+window.addEventListener('DOMContentLoaded', attachAudioTrackers);
+
+/* ── FLUSH SESSION DATA ── */
+async function flushSession() {
+  if (_isFlushing) return;
+  const pages = _sessionPages;
+  const mins  = parseFloat((_sessionSeconds / 60).toFixed(2));
+  if (pages === 0 && mins === 0) return;
+
+  _isFlushing     = true;
+  _sessionPages   = 0;
+  _sessionSeconds = 0;
+
+  const current = await jbGet();
+  if (current) {
+    await jbPut({
+      ...current,
+      pagesRead:       (current.pagesRead || 0) + pages,
+      minutesListened: parseFloat(((current.minutesListened || 0) + mins).toFixed(2)),
+      lastUpdated:     new Date().toISOString()
+    });
+  }
+  _isFlushing = false;
+}
+
+function scheduleFlush() {
+  clearTimeout(_flushTimeout);
+  _flushTimeout = setTimeout(flushSession, 12000);
+}
+
+window.addEventListener('beforeunload', () => { if (_sessionPages || _sessionSeconds) flushSession(); });
+setInterval(flushSession, 120000);
+
+/* ════════════════════════════════════════════
+   ANALYTICS DASHBOARD UI
+════════════════════════════════════════════ */
+
+const analyticsOverlay  = document.getElementById('analytics-overlay');
+const analyticsCloseBtn = document.getElementById('analytics-close-btn');
+const secretBtn         = document.getElementById('secret-analytics-btn');
+const analyticsRefresh  = document.getElementById('analytics-refresh-btn');
+const analyticsReset    = document.getElementById('analytics-reset-btn');
+const analyticsConfirm  = document.getElementById('analytics-confirm');
+const confirmYes        = document.getElementById('confirm-yes-btn');
+const confirmNo         = document.getElementById('confirm-no-btn');
+const analyticsLoader   = document.getElementById('analytics-loader');
+const analyticsCards    = document.getElementById('analytics-cards');
+const refreshIcon       = document.getElementById('refresh-icon');
+
+function setLoading(on) {
+  if (analyticsLoader) analyticsLoader.classList.toggle('active', on);
+  if (analyticsCards)  analyticsCards.style.opacity = on ? '0.3' : '1';
+  if (refreshIcon)     refreshIcon.classList.toggle('spinning', on);
+  if (analyticsRefresh) analyticsRefresh.disabled = on;
+  if (analyticsReset)   analyticsReset.disabled   = on;
+}
+
+function hideConfirm() {
+  if (analyticsConfirm) analyticsConfirm.classList.remove('visible');
+}
+
+/* ── Render stat numbers ── */
+function renderStats(data) {
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('val-views', data.views ?? '—');
+  set('val-pages', data.pagesRead ?? '—');
+  set('val-mins',  data.minutesListened != null ? (+data.minutesListened).toFixed(1) + ' min' : '—');
+
+  const updEl = document.getElementById('analytics-updated');
+  if (updEl && data.lastUpdated) {
+    updEl.textContent = 'Last updated: ' + new Date(data.lastUpdated).toLocaleString();
+  } else if (updEl) {
+    updEl.textContent = 'No data yet';
+  }
+}
+
+/* ── Render visitor log table ── */
+function renderVisitorLog(visits) {
+  const tbody = document.getElementById('log-tbody');
+  const badge = document.getElementById('log-count');
+  if (!tbody) return;
+
+  if (badge) badge.textContent = visits && visits.length ? visits.length + ' visits' : '';
+
+  if (!visits || visits.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="log-empty">No visits recorded yet</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = visits.map(v => {
+    const dt       = v.t ? new Date(v.t) : null;
+    const dateStr  = dt ? dt.toLocaleDateString()                                       : '—';
+    const timeStr  = dt ? dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—';
+    const flagImg  = v.fl ? `<img src="https://flagcdn.com/16x12/${v.fl}.png" alt="${v.c}" style="vertical-align:middle;margin-right:4px;border-radius:2px;">` : '';
+    const devIcon  = v.d === 'Mobile' ? '📱' : v.d === 'Tablet' ? '📟' : '🖥️';
+
+    return `<tr>
+      <td class="log-cell"><span class="log-date">${dateStr}</span><span class="log-time">${timeStr}</span></td>
+      <td class="log-cell">${devIcon} ${v.d || '—'}</td>
+      <td class="log-cell">${v.b || '—'} / ${v.o || '—'}</td>
+      <td class="log-cell">${flagImg}${v.ci ? v.ci + ', ' : ''}${v.c || '—'}</td>
+      <td class="log-cell log-ip">${v.ip || '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ── Fetch & render everything ── */
+async function loadAndRender() {
+  setLoading(true);
+  hideConfirm();
+
+  const data = await jbGet();
+  setLoading(false);
+
+  if (!data) {
+    const updEl = document.getElementById('analytics-updated');
+    if (updEl) updEl.textContent = 'Could not load data — check your API key & Bin ID';
+    return;
+  }
+
+  renderStats(data);
+  renderVisitorLog(data.visits || []);
+}
+
+/* ── Open / Close ── */
+async function openAnalytics() {
+  if (!analyticsOverlay) return;
+  analyticsOverlay.classList.add('visible');
+  await loadAndRender();
+}
+
+function closeAnalytics() {
+  if (analyticsOverlay) analyticsOverlay.classList.remove('visible');
+  hideConfirm();
+}
+
+/* ── Refresh ── */
+if (analyticsRefresh) {
+  analyticsRefresh.addEventListener('click', async () => {
+    hideConfirm();
+    await loadAndRender();
+  });
+}
+
+/* ── Reset ── */
+if (analyticsReset) {
+  analyticsReset.addEventListener('click', () => {
+    if (analyticsConfirm) analyticsConfirm.classList.toggle('visible');
+  });
+}
+
+if (confirmYes) {
+  confirmYes.addEventListener('click', async () => {
+    hideConfirm();
+    setLoading(true);
+    const resetData = { views: 0, pagesRead: 0, minutesListened: 0, lastUpdated: new Date().toISOString(), visits: [] };
+    await jbPut(resetData);
+    _sessionPages = 0; _sessionSeconds = 0;
+    await loadAndRender();
+  });
+}
+
+if (confirmNo) confirmNo.addEventListener('click', hideConfirm);
+
+/* ── Wire buttons ── */
+if (secretBtn)         secretBtn.addEventListener('click', openAnalytics);
+if (analyticsCloseBtn) analyticsCloseBtn.addEventListener('click', closeAnalytics);
+
+if (analyticsOverlay) {
+  analyticsOverlay.addEventListener('click', e => { if (e.target === analyticsOverlay) closeAnalytics(); });
+}
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && analyticsOverlay && analyticsOverlay.classList.contains('visible')) closeAnalytics();
+});
+
+/* ============================================================
    2. FLOATING HEARTS (SVG-based, 3D glossy look)
 ============================================================ */
+
 const heartsLayer = document.getElementById('hearts-layer');
 const HEART_COLORS = [
   ['#ff80a8', '#e8185e', '#7a0028'],
@@ -193,6 +500,7 @@ function goToPage(idx) {
   stopAllAudio();
   playPageAudio(currentPage);
   updateNavBtns();
+  trackPageRead(); // ← analytics: count this page as read
 }
 
 
